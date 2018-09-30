@@ -1,13 +1,17 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, Text, Button} from 'react-native'
+import { View, ScrollView, StyleSheet, Text } from 'react-native'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { login } from '../actions/auth'
-import { Card, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements'
+import { Card, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const mapStateToProps = ({ auth }) => ({ auth });
 const mapDispatchToProps = (dispatch) => bindActionCreators({ login }, dispatch)
+
+
+
 
 
 onChange = (event) => {
@@ -25,8 +29,9 @@ class LoginForm extends React.Component {
 
 
   render() {
-    return <View style={{ flex: 1 }}>
-			<Card keyboardDismissMode="on-drag" contentContainerStyle={{ paddingTop: 65 + 30 }} style={{ flex: 1, backgroundColor: '#F8F8F9' }}>
+    return (
+      <View style={{ flex: 1 }}>
+			  <Card keyboardDismissMode="on-drag" contentContainerStyle={{ paddingTop: 65 + 30 }} style={{ flex: 1, backgroundColor: '#F8F8F9' }}>
 				<View>
 					<FormLabel>User Name</FormLabel>
 					<FormInput 
@@ -49,14 +54,33 @@ class LoginForm extends React.Component {
 				</View>
 				<View>
 					<Button 
+            style={styles.button}
             onPress={() => {
                 this.props.login(this.state)
               }
             } 
-            title="Log In" />
+            title="Sign In" />
+            <Button
+              style={styles.newUser}
+              onPress={() => {
+                this.props.login(this.state)
+              }
+              }
+              title="New User" />
+            <Button
+              icon={
+                <Icon
+                  name='arrow-right'
+                  size={15}
+                  color='white'
+                />
+              }
+              title='BUTTON WITH ICON COMPONENT'
+            />
 				</View>
 			</Card>
-		</View>;
+    </View>
+    );
   }
 }
 
@@ -84,6 +108,19 @@ const styles = StyleSheet.create({
   },
   formInput: {
     paddingRight: 20,
+  },
+  signin: {
+    backgroundColor: 'steelblue',
+    borderRadius:20,
+    
+    
+  },
+  newUser: {
+    backgroundColor: 'red',
+    borderRadius: 20,
+    color: 'green',
+
+
   }
 })
 

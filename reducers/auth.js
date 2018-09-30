@@ -4,7 +4,8 @@ const initialState =
   { 
     email: '',
     password: '',
-    token: ''
+    token: '',
+    isLoggedIn: false
  }
 
 

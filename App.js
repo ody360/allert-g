@@ -2,32 +2,50 @@ import React from 'react'
 // import store from './store'
 // import { connect } from 'react-redux'
 // import {bindActionCreators} from 'redux'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, AsyncStorage, TouchableNativeFeedback } from 'react-native'
 import { Header } from 'react-native-elements'
 import LoginForm from './screens/LoginForm'
 import UserProfile from './screens/UserProfile'
-import { createStackNavigator } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import store from './store'
 import { Provider } from 'react-redux'
+import NewUserForm from './screens/NewUserForm'
+import AddAllergy from './screens/AddAllergy';
 
- //const userMainView = createStackNavigator({
-// 	  ScheduleList: { screen: Schedule },
-// 	  EventDetails: { screen: EventDetails },
+//  const userMainView = createStackNavigator({
+//    LoginForm: { screen: LoginForm },
+//    UserProfile: { screen: UserProfile },
 // 	}, {
-// 		headerMode: 'screen'
+//      initialRouteName: UserProfile,
+// 		headerMode: 'screen',
 //   })
 
+// const AppStack = createStackNavigator({ Home: NewUserForm, Other: UserProfile });
+// const AuthStack = createStackNavigator({ SignIn: LoginForm });
 
 export default class App extends React.Component {
-
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+  }
+  
   render() {
-    
+    AsyncStorage.clear()
+    const token = null
+    try{
+      const token = AsyncStorage.getItem('token')
+    } catch (e) {
+      console.log(e)
+      const token = null
+    }
     return (
       <Provider store={ store() }>
         <View style={styles.container}>
-		    	<Header leftComponent={{ icon: 'menu', color: '#fff' }} centerComponent={{ text: 'ALERT~G~LOG IN', style: { color: '#fff' } }} rightComponent={{ icon: 'home', color: '#fff' }} />
-			      {/* <UserProfile /> */}
-          <LoginForm />
+			      {/* {(!token) ? <LoginForm /> : <UserProfile />} */}
+          <AddAllergy />
+          {/* <UserProfile /> */}
         </View>
       </Provider>
     )

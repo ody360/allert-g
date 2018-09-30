@@ -1,14 +1,131 @@
 import React from 'react'
-import { TouchableOpacity, StyleSheet, Text, View, Image, ImageBackground, SectionList } from 'react-native'
+import {
+	TouchableNativeFeedback,
+	StyleSheet,
+	Text,
+	View,
+	Image,
+	ImageBackground,
+	SectionList,
+	ScrollView,
+} from 'react-native';
 import ToggleButton from '../components/ToggleButton'
 import Dimensions from 'Dimensions'
 
 
-export default class UserProfile extends React.Component {
+const testProfile = [
+	{
+		title: 'MAIN USER PROFILE',
+		data: [
+			{
+				first_name: 'Clark',
+				last_name: 'Kent',
+				email: 'super@man.com',
+				birthdate: '1978-08-04',
+				sex: 'm',
+				home_phone: '3604790142',
+				cell_phone: '3601111111',
+				emergency1: '3602222222',
+				emergency2: '3603333333',
+			},
+		],
+	},
+	{
+		title: 'ALLERGIES',
+		data: [
+			{ 
+				'0':'peanut',
+				'1':'avocado',
+				'2':'kryptonite'
+			}
+		],
+	},
+	{
+		title: 'MEDICATION',
+		data: [
+			{
+				'0': 'peanut',
+				'1': 'avocado',
+				'2': 'kryptonite'
+			}
+		],
+	},
+	{
+		title: 'MEDICAL HISTORY',
+		data: [
+			{
+				'0': 'peanut',
+				'1': 'avocado',
+				'2': 'kryptonite'
+			}
+		],
+	},
+];
 
+const testData = [		
+			"id": 1,
+			"first_name": "Clark",
+			"last_name": "Kent",
+			"email": "super@man.com",
+			"birthdate": "1978-08-04",
+			"sex": "m",
+			"home_phone": "3604790142",
+			"cell_phone": "3601111111",
+			"emergency1": "3602222222",
+			"emergency2": "3603333333",
+		]
+
+export default class UserProfile extends React.Component {
+static navigationOptions = {
+	header:null
+}
 state = {
  selection: 'PROFILE',
 }
+
+
+renderItem = ({ item }) => {
+	return <ScrollView style={styles.row} key={item.key} onPress={() => this._handlePressRow(item)}>
+			<Text style={styles.rowTitle} >
+				{item.first_name}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.last_name}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.email}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.birthdate}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.sex}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.home_phone}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.cell_phone}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.emergency1}
+			</Text>
+			<Text style={styles.rowTitle} >
+				{item.emergency2}
+			</Text>
+			<Text style={styles.rowSpeaker}>{item.speaker}</Text>
+	</ScrollView>;
+	}
+
+	renderSectionHeader = ({ section }) => {
+		return (
+			<View style={styles.sectionHeader} key={section.key}>
+				<Text style={styles.sectionHeaderText}>
+					{section.title}
+				</Text>
+			</View>
+		)
+	}
 
 handlePressItem = (item) => {
     this.setState({ selection: item })
@@ -21,14 +138,23 @@ render() {
       <ImageBackground style={styles.image} source={require('../assets/images/Immune-System2.jpg')}>
         <Text style={styles.title}>ALLERT - G</Text>
         <ToggleButton
-          items={['PROFILE','FAMILY','PARTY','PREFS']}
+          items={['PROFILE','PARTY','PREFS']}
           value={selection}
           onPressItem={this.handlePressItem} />
       </ImageBackground>
+			<SectionList
+				style={styles.list}
+				sections={testProfile}
+				renderItem={this.renderItem}
+				renderSectionHeader={this.renderSectionHeader}
+			/>
     </View>
     )
   }
 }
+
+
+
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
 	container: {
