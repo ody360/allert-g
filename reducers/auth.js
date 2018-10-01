@@ -4,7 +4,6 @@ const initialState =
   { 
     email: '',
     password: '',
-    token: '',
     isLoggedIn: false
  }
 
@@ -13,9 +12,8 @@ const initialState =
   
   switch (type) {
     case LOGIN:
-      return {...state, token: payload};
-    // case LOGOUT:
-    //    return state;
+      return {...state, token: payload, isLoggedIn: true};
+    
     default:
       return state;
 

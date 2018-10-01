@@ -10,6 +10,7 @@ const login = async (email,password) => {
 
   try {
     const res = await axios.post(`${BASE_URL}/login`,body)
+    AsyncStorage.setItem('token',res.data)
     return res.data
   } catch(e) { console.log("IN MODEL ERR: ", e)}
 }

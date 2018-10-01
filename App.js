@@ -1,5 +1,4 @@
 import React from 'react'
-// import store from './store'
 // import { connect } from 'react-redux'
 // import {bindActionCreators} from 'redux'
 import { StyleSheet, Text, View, Image, AsyncStorage, TouchableNativeFeedback } from 'react-native'
@@ -11,6 +10,8 @@ import store from './store'
 import { Provider } from 'react-redux'
 import NewUserForm from './screens/NewUserForm'
 import AddAllergy from './screens/AddAllergy';
+import AddAllergyForm from './components/AddAllergyForm'
+import AddMedHx from './screens/AddMedHx'
 
 //  const userMainView = createStackNavigator({
 //    LoginForm: { screen: LoginForm },
@@ -20,8 +21,8 @@ import AddAllergy from './screens/AddAllergy';
 // 		headerMode: 'screen',
 //   })
 
-// const AppStack = createStackNavigator({ Home: NewUserForm, Other: UserProfile });
-// const AuthStack = createStackNavigator({ SignIn: LoginForm });
+const AppStack = createStackNavigator({ Home: NewUserForm, Other: UserProfile });
+const AuthStack = createStackNavigator({ SignIn: LoginForm });
 
 export default class App extends React.Component {
   async componentWillMount() {
@@ -30,6 +31,7 @@ export default class App extends React.Component {
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
   }
+  
   
   render() {
     AsyncStorage.clear()
@@ -44,8 +46,9 @@ export default class App extends React.Component {
       <Provider store={ store() }>
         <View style={styles.container}>
 			      {/* {(!token) ? <LoginForm /> : <UserProfile />} */}
-          <AddAllergy />
+          {/* <AddAllergy /> */}
           {/* <UserProfile /> */}
+          <AddMedHx />
         </View>
       </Provider>
     )

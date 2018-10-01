@@ -1,8 +1,8 @@
-import { } from "../actions/profiles"
+import { GET_PROFILES } from '../actions/profiles';
 
 const initialState =
 {
-  "id":,
+  "id":1,
   "first_name":'',
   "last_name": '',
   "email": '',

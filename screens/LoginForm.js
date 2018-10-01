@@ -1,9 +1,9 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, Text } from 'react-native'
+import { View, ScrollView, StyleSheet, Text, Button } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { login } from '../actions/auth'
-import { Card, FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import { Card, FormLabel, FormInput, FormValidationMessage,  } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -20,6 +20,13 @@ onChange = (event) => {
   })
 }
 
+onButtonPress = () => {
+  try {
+    this.props.login(this.state)
+  } catch(e) {
+    console.log('CREATE NEW USER',e)
+  }
+}
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -63,20 +70,11 @@ class LoginForm extends React.Component {
             <Button
               style={styles.newUser}
               onPress={() => {
-                this.props.login(this.state)
+                console.log('PRESSED1');
+               // this.props.login(this.state)
               }
               }
               title="New User" />
-            <Button
-              icon={
-                <Icon
-                  name='arrow-right'
-                  size={15}
-                  color='white'
-                />
-              }
-              title='BUTTON WITH ICON COMPONENT'
-            />
 				</View>
 			</Card>
     </View>

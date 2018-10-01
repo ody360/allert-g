@@ -1,8 +1,10 @@
-import { GET_ALLERGIES } from "../actions/allergies"
+import { GET_ALLERGIES, ADD_ALLERGIES, CHECK_ALLERGIES } from '../actions/allergies';
 
 const initialState =
 {
-  allergies:[]
+	id:'',
+	allergy_name:'',
+	checked: false,
 }
 
 
@@ -10,9 +12,9 @@ function allergies(state = initialState, { type, payload }) {
 
   switch (type) {
 		case GET_ALLERGIES:
+		case ADD_ALLERGIES:
+		case CHECK_ALLERGIES:
 			return payload;
-		// case LOGOUT:
-		//    return state;
 		default:
 			return state;
   }

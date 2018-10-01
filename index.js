@@ -9,7 +9,6 @@ import {
     View,
 } from 'react-native'
 
-
 export default class allertg extends React.Component {
     render() {
         <Provider store={ store() }>
@@ -17,3 +16,4 @@ export default class allertg extends React.Component {
         </Provider>
     }
 }
+
