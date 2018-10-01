@@ -77,10 +77,7 @@ const testData = [
 
 export default class UserProfile extends React.Component {
 static navigationOptions = {
-	header:null
-}
-state = {
- selection: 'PROFILE',
+	title:'USERPROFILE'
 }
 
 
@@ -132,27 +129,29 @@ handlePressItem = (item) => {
   }
 
 render() {
-  const {selection} = this.state
-  return (
-    <View style={styles.container}>
-      <ImageBackground style={styles.image} source={require('../assets/images/Immune-System2.jpg')}>
-        <Text style={styles.title}>ALLERT - G</Text>
-        <ToggleButton
-          items={['PROFILE','PARTY','PREFS']}
-          value={selection}
-          onPressItem={this.handlePressItem} />
-      </ImageBackground>
-			<SectionList
-				style={styles.list}
-				sections={testProfile}
-				renderItem={this.renderItem}
-				renderSectionHeader={this.renderSectionHeader}
-			/>
-    </View>
-    )
-  }
+	return(
+	<Text>IN USERPROFILE</Text>)
+  // const {selection} = this.state
+  // return (
+  //   <View style={styles.container}>
+  //     <ImageBackground style={styles.image} source={require('../assets/images/Immune-System2.jpg')}>
+  //       <Text style={styles.title}>ALLERT - G</Text>
+  //       <ToggleButton
+  //         items={['PROFILE','PARTY','PREFS']}
+  //         value={selection}
+  //         onPressItem={this.handlePressItem} />
+  //     </ImageBackground>
+	// 		<SectionList
+	// 			style={styles.list}
+	// 			sections={testProfile}
+	// 			renderItem={this.renderItem}
+	// 			renderSectionHeader={this.renderSectionHeader}
+	// 		/>
+  //   </View>
+  //   )
+  // }
 }
-
+}
 
 
 const DEVICE_WIDTH = Dimensions.get('window').width;

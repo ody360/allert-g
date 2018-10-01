@@ -14,19 +14,19 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ login }, dispatch)
 
 
 
-onChange = (event) => {
-  this.setState({
-    [event.target.name]: event.target.value
-  })
-}
+// onChange = (event) => {
+//   this.setState({
+//     [event.target.name]: event.target.value
+//   })
+// }
 
-onButtonPress = () => {
-  try {
-    this.props.login(this.state)
-  } catch(e) {
-    console.log('CREATE NEW USER',e)
-  }
-}
+// onButtonPress = () => {
+//   try {
+//     this.props.login(this.state)
+//   } catch(e) {
+//     console.log('CREATE NEW USER',e)
+//   }
+// }
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -34,11 +34,15 @@ class LoginForm extends React.Component {
     this.state = { email:'', password:''}
   }
 
+  static navigationOptions = {
+    title: 'SignIn'
+  }
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-			  <Card keyboardDismissMode="on-drag" contentContainerStyle={{ paddingTop: 65 + 30 }} style={{ flex: 1, backgroundColor: '#F8F8F9' }}>
+      <Text>IN LOGIN</Text>
+      
+			  /* <Card keyboardDismissMode="on-drag" contentContainerStyle={{ paddingTop: 65 + 30 }} style={{ flex: 1, backgroundColor: '#F8F8F9' }}>
 				<View>
 					<FormLabel>User Name</FormLabel>
 					<FormInput 
@@ -77,7 +81,7 @@ class LoginForm extends React.Component {
               title="New User" />
 				</View>
 			</Card>
-    </View>
+    */
     );
   }
 }
@@ -88,38 +92,38 @@ const onButtonPress =  () => {
   this.props.login(this.state)
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-  },
-  button: {
-    backgroundColor: 'purple',
-    height: 30,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    borderRadius: 15,
-  },
-  text: {
-    color: 'white',
-    fontSize: 16,
-  },
-  formInput: {
-    paddingRight: 20,
-  },
-  signin: {
-    backgroundColor: 'steelblue',
-    borderRadius:20,
+// const styles = StyleSheet.create({
+//   container: {
+//     flexDirection: "row",
+//   },
+//   button: {
+//     backgroundColor: 'purple',
+//     height: 30,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     paddingHorizontal: 20,
+//     borderRadius: 15,
+//   },
+//   text: {
+//     color: 'white',
+//     fontSize: 16,
+//   },
+//   formInput: {
+//     paddingRight: 20,
+//   },
+//   signin: {
+//     backgroundColor: 'steelblue',
+//     borderRadius:20,
     
     
-  },
-  newUser: {
-    backgroundColor: 'red',
-    borderRadius: 20,
-    color: 'green',
+//   },
+//   newUser: {
+//     backgroundColor: 'red',
+//     borderRadius: 20,
+//     color: 'green',
 
 
-  }
-})
+//   }
+// })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

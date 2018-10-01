@@ -2,16 +2,22 @@ import { GET_PROFILES } from '../actions/profiles';
 
 const initialState =
 {
-  "id":1,
-  "first_name":'',
-  "last_name": '',
-  "email": '',
-  "birthdate": '',
-  "sex": '',
-  "home_phone": '',
-  "cell_phone": '',
-  "emergency1": '',
-  "emergency2": '',
+  "id": 1,
+  "first_name": "",
+  "last_name": "",
+  "email": "",
+  "birthdate": "",
+  "sex": "m",
+  "home_phone": "",
+  "cell_phone": "",
+  "emergency1": "",
+  "emergency2": "",
+  "created_at": "",
+  "updated_at": "",
+  "users_id": 1,
+  "allergies_id": 1,
+  "medhx": "",
+  "medication": ""
 }
 
 

@@ -53,7 +53,7 @@ class AddAllergy extends React.Component {
   }
 
   onPress = (id) => { 
-    console.log('IN ON PRESS WITH ID:   ', id)
+    console.log('IN ON PRESS WITH ID:    ', id)
     let tempState = {...this.state}
     console.log('TEMP IS: ', tempState)
 

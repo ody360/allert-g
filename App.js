@@ -12,17 +12,8 @@ import NewUserForm from './screens/NewUserForm'
 import AddAllergy from './screens/AddAllergy';
 import AddAllergyForm from './components/AddAllergyForm'
 import AddMedHx from './screens/AddMedHx'
+import AppNavigation from './navigation/AppNavigation';
 
-//  const userMainView = createStackNavigator({
-//    LoginForm: { screen: LoginForm },
-//    UserProfile: { screen: UserProfile },
-// 	}, {
-//      initialRouteName: UserProfile,
-// 		headerMode: 'screen',
-//   })
-
-const AppStack = createStackNavigator({ Home: NewUserForm, Other: UserProfile });
-const AuthStack = createStackNavigator({ SignIn: LoginForm });
 
 export default class App extends React.Component {
   async componentWillMount() {
@@ -34,24 +25,11 @@ export default class App extends React.Component {
   
   
   render() {
-    AsyncStorage.clear()
-    const token = null
-    try{
-      const token = AsyncStorage.getItem('token')
-    } catch (e) {
-      console.log(e)
-      const token = null
-    }
-    return (
-      <Provider store={ store() }>
-        <View style={styles.container}>
-			      {/* {(!token) ? <LoginForm /> : <UserProfile />} */}
-          {/* <AddAllergy /> */}
-          {/* <UserProfile /> */}
-          <AddMedHx />
-        </View>
-      </Provider>
-    )
+    return <Provider store={store()}>
+			<View style={styles.container}>
+        <AppNavigation />
+			</View>
+		</Provider>;
   }
 }
 
