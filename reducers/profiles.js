@@ -1,9 +1,9 @@
-import { GET_PROFILES } from '../actions/profiles';
+import { GET_PROFILES, GET_PROFILES_ID } from '../actions/profiles';
 
 const initialState =
 {
   "id": 1,
-  "first_name": "",
+  "first_name":"",
   "last_name": "",
   "email": "",
   "birthdate": "",
@@ -25,6 +25,9 @@ function profiles(state = initialState, { type, payload }) {
 
   switch (type) {
     case GET_PROFILES:
+      return payload;
+
+    case GET_PROFILES_ID:
       return payload;
 
     default:

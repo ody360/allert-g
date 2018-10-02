@@ -14,11 +14,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ login }, dispatch)
 
 
 
-// onChange = (event) => {
-//   this.setState({
-//     [event.target.name]: event.target.value
-//   })
-// }
+
 
 // onButtonPress = () => {
 //   try {
@@ -38,92 +34,88 @@ class LoginForm extends React.Component {
     title: 'SignIn'
   }
 
+  onEmailChange = event => {
+    let newState = { ...this.state }
+    newState.email = event
+    this.setState(...this.state, newState);
+  }
+
+  onPasswordChange = event => {
+    let newState = { ...this.state }
+    newState.password = event
+    this.setState(...this.state, newState);
+  }
+
+
   render() {
-    return (
-      <Text>IN LOGIN</Text>
-      
-			  /* <Card keyboardDismissMode="on-drag" contentContainerStyle={{ paddingTop: 65 + 30 }} style={{ flex: 1, backgroundColor: '#F8F8F9' }}>
-				<View>
-					<FormLabel>User Name</FormLabel>
-					<FormInput 
-            onChangeText={email => this.setState({...this, email})} 
-             value={this.state.email} 
-             placeholder="email address"
-             autoCorrect={false}
-             style={styles.formInput} />
-					<FormValidationMessage />
-				</View>
-				<View>
-					<FormLabel>Password</FormLabel>
-					<FormInput 
-            onChangeText={password => {this.setState({...this.state, password })}}
-            value={this.state.password} 
-            placeholder="password"
-            secureTextEntry={true} 
-            style={styles.formInput} />
-					<FormValidationMessage />
-				</View>
-				<View>
-					<Button 
-            style={styles.button}
-            onPress={() => {
-                this.props.login(this.state)
-              }
-            } 
-            title="Sign In" />
-            <Button
-              style={styles.newUser}
-              onPress={() => {
-                console.log('PRESSED1');
-               // this.props.login(this.state)
-              }
-              }
-              title="New User" />
-				</View>
-			</Card>
-    */
-    );
+    return <Card keyboardDismissMode="on-drag" contentContainerStyle={{ paddingTop: 65 + 30 }} style={{ flex: 1, backgroundColor: '#F8F8F9' }}>
+			<View>
+				<FormLabel>User Name</FormLabel>
+				<FormInput onChangeText={email => this.onEmailChange(email)} value={this.state.email} placeholder="email address" autoCorrect={false} style={styles.formInput} />
+				<FormValidationMessage />
+			</View>
+			<View>
+				<FormLabel>Password</FormLabel>
+        <FormInput onChangeText={password => {
+          this.onPasswordChange(password)
+					}} value={this.state.password} placeholder="password" secureTextEntry={true} style={styles.formInput} />
+				<FormValidationMessage />
+			</View>
+			<View>
+				<Button 
+          style={styles.button} 
+          onPress={() => {
+						this.props.login(this.state);
+					}} 
+          title="Sign In" />
+				<Button 
+          style={styles.newUser} 
+          onPress={() => {
+						console.log('PRESSED1');
+						// this.props.login(this.state)
+					}} 
+          title="New User" />
+			</View>
+		</Card>;
   }
 }
 
 const onButtonPress =  () => {
-  
-  console.log("ABOUT TO SEND IN: ", this.state)
   this.props.login(this.state)
 }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flexDirection: "row",
-//   },
-//   button: {
-//     backgroundColor: 'purple',
-//     height: 30,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     paddingHorizontal: 20,
-//     borderRadius: 15,
-//   },
-//   text: {
-//     color: 'white',
-//     fontSize: 16,
-//   },
-//   formInput: {
-//     paddingRight: 20,
-//   },
-//   signin: {
-//     backgroundColor: 'steelblue',
-//     borderRadius:20,
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+  },
+  button: {
+    backgroundColor: 'purple',
+    height: 30,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    borderRadius: 15,
+  },
+  text: {
+    color: 'white',
+    fontSize: 16,
+  },
+  formInput: {
+    paddingRight: 20,
+  },
+  signin: {
+    backgroundColor: 'steelblue',
+    borderRadius:20,
     
     
-//   },
-//   newUser: {
-//     backgroundColor: 'red',
-//     borderRadius: 20,
-//     color: 'green',
+  },
+  newUser: {
+    backgroundColor: 'red',
+    borderRadius: 20,
+    color: 'green',
 
 
-//   }
-// })
+  }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

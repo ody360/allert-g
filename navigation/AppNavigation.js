@@ -5,16 +5,15 @@ import LoginForm from '../screens/LoginForm';
 import NewUserForm from '../screens/NewUserForm';
 import AuthLoadingScreen from './AuthLoadingScreen'
 import AddAllergy from '../screens/AddAllergy';
-import TESTSCREEN from '../screens/TESTSCREEN'
 
 const AppStack = createStackNavigator({ Home: UserProfile, Other: NewUserForm })
-const AuthStack = createStackNavigator({ TESTSCREEN });
+const AuthStack = createStackNavigator({ Auth: LoginForm });
 
 export default createSwitchNavigator(
 	{
 		AuthLoading: AuthLoadingScreen,
 		App: AppStack,
-		AuthStack,
+		Auth: AuthStack,
 	},
 	{
 		initialRouteName: 'AuthLoading',

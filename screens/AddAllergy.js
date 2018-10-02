@@ -29,7 +29,6 @@ class AddAllergy extends React.Component {
   
   async componentDidMount() {
     await this.props.getAllergies()
-    console.log('COMP DID MOUNT', this.props.allergies)
     this.setState({ 
       ...this.state,
       allergies:this.props.allergies
