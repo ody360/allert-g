@@ -4,7 +4,10 @@ import { connect } from 'react-redux'
 import { TextInput, View, StyleSheet, Text, ScrollView, Image, KeyboardAvoidingView } from 'react-native';
 import { Avatar, Divider, FormInput, FormLabel, FormValidation } from 'react-native-elements';
 import DatePicker from 'react-native-datepicker'
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { Content, ListItem, Radio, Right, Left, Button } from 'native-base'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 
 export default class NewUserForm extends React.Component {
   constructor(props) {
@@ -21,15 +24,19 @@ export default class NewUserForm extends React.Component {
       emergency2: '',
 
     }
-  }
+	}
+	
 
   render() {
-    return <View style={styles.container}>
+		return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
+			resetScrollToCoords={{ x: 0, y: 0 }}
+			contentContainerStyle={styles.container}
+			scrollEnabled={false}>
 			
 			<ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }} 
-        keyboardDismissMode="on-drag" 
+        keyboardDismissMode="interactive"
         overScrollMode='always'>
-				<KeyboardAvoidingView enabled>
+				
 					<Avatar medium rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg' }} onPress={() => console.log('Works!')} activeOpacity={0.7} />
 					<FormLabel>Name</FormLabel>
 					<FormInput placeholder="First Name" />
@@ -48,7 +55,7 @@ export default class NewUserForm extends React.Component {
 							this.setState({ birthdate: date });
 						}} />
 					<Content>
-						<ListItem>
+						{/* <ListItem>
 							<Left>
 								<Text>Male</Text>
 							</Left>
@@ -61,27 +68,33 @@ export default class NewUserForm extends React.Component {
 							<Right>
 								<Radio selected={true} />
 							</Right>
-						</ListItem>
+						</ListItem> */}
+						<RadioForm
+							radio_props={radio_props}
+							initial={0}
+							onPress={(value) => { this.setState({ value: value }) }}
+						/>
 					</Content>
 
 					<Button full info onPress={() => {this.props.navigation.navigate('Allergy')}}>
 						<Text>Continue</Text>
 					</Button>
-
-					<View>
-						<Text> </Text>
-					</View>
-					<View>
-						<Text> </Text>
-					</View>
-					<View>
-						<Text> </Text>
-					</View>
-				</KeyboardAvoidingView>
+					<Text> </Text>
+				<Text> </Text>
+				<Text> </Text>
+				<Text> </Text>
+				<Text> </Text>
+				<Text> </Text>
+				
 			</ScrollView>
-		</View>;
+		</KeyboardAwareScrollView>
   }
 }
+
+var radio_props = [
+	{ label: 'Male', value: 0 },
+	{ label: 'Female', value: 1 }
+]
 
 const styles = StyleSheet.create({
 	container: {

@@ -2,7 +2,7 @@ import React from 'react'
 import { View, ScrollView, StyleSheet, CheckBox, ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Container, Header, Content, ListItem, Body, Title, Text, Form} from 'native-base'
+import { Container, Header, Content, ListItem, Body, Title, Text, Form, Button} from 'native-base'
 import Dimensions from 'Dimensions'
 import Allergies from '../components/Allergies'
 import {getAllergies, addAllergies} from '../actions/allergies'
@@ -37,8 +37,6 @@ class AddAllergy extends React.Component {
     }
     )
     
-
-    //console.log('AFTER MOUNT   ', this.state)
   }
 
   async componentWillMount() {
@@ -67,7 +65,7 @@ class AddAllergy extends React.Component {
     
     this.setState(...this.state,tempState)
 
-    console.log("FINALLY HERERERERE", this.state)
+  
 
   }
   
@@ -86,6 +84,9 @@ class AddAllergy extends React.Component {
            {this.state.allergies === undefined ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
             <AddAllergyForm />
 	        </Content>
+        <Button full info onPress={() => { this.props.navigation.navigate('Hx') }}>
+          <Text>Continue</Text>
+        </Button>
 	    </Container>
     );
     }
