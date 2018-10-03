@@ -75,11 +75,56 @@ const testProfile = [
 
 const formatUserData = (obj) => {
 	let result = {}
-	let profile = obj
-	result.title = 'TEST MAIN PROFILE'
+
+	result.title = 'USER MAIN PROFILE'
 	result.data = []
-	// console.log('OBJ IS ', profile)
-	result.data.push(profile)
+	let temp = {}
+	temp.first_name = obj.first_name
+	temp.last_name = obj.last_name
+	temp.email = obj.email
+	temp.birthdate = obj.birthdate
+	temp.sex = obj.sex
+	temp.home_phone = obj.home_phone
+	temp.cell_phone = obj.cell_phone
+	temp.emergency1 = obj.emergency1
+	temp.emergency2 = obj.emergency2
+	temp.medhx = ''
+	temp.medication = ''
+
+	result.data.push(temp)
+		
+	return result
+}
+
+// const formatUserAllergy = obj => {
+// 	let result = {}
+// 	let profile = obj
+// 	result.title = 'ALLERGIES';
+// 	result.data = []
+
+// //	result.data.push(profile)
+ 
+// 	return result
+// }
+
+const formatUserMed = obj => {
+	let result = {}
+	result.title = 'MEDICAL HISTORY'
+	result.data = []
+	let temp = {}
+	temp.first_name = ''
+	temp.last_name = ''
+	temp.email = ''
+	temp.birthdate = ''
+	temp.sex = ''
+	temp.home_phone = ''
+	temp.cell_phone = ''
+	temp.emergency1 = ''
+	temp.emergency2 = ''
+	temp.medhx = obj.medhx
+	temp.medication = obj.medication
+
+	result.data.push(temp)
 
 	return result
 }
@@ -88,6 +133,10 @@ const formatUserData = (obj) => {
 
 
 class UserProfile extends React.Component {
+	static navigationOptions = {
+		title: 'Allert Group Application',
+	}
+
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -104,35 +153,50 @@ class UserProfile extends React.Component {
 
 	
 renderItem = ({ item }) => {
+
 	return <ScrollView style={styles.row} key={item.key} onPress={() => this._handlePressRow(item)}>
+			
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.first_name}
-			</Text>
+				NAME: {item.first_name} 	{item.last_name}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.last_name}
-			</Text>
+				EMAIL:  {item.email}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.email}
-			</Text>
+				Birthdate: {item.birthdate}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.birthdate}
-			</Text>
+				{item.sex === 'm' ? `Sex: Male`: `Sex: Female`}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.sex}
-			</Text>
+				Home Phone: {item.home_phone}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.home_phone}
-			</Text>
+				Cell Phone:   {item.cell_phone}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.cell_phone}
-			</Text>
+				Emergency1 : {item.emergency1}
+			</Text> : null}
+			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.emergency1}
-			</Text>
+				Emergency2 : {item.emergency2}
+			</Text> : null}
+			{item.medhx !== '' ?
 			<Text style={styles.rowTitle} >
-				{item.emergency2}
-			</Text>
-			<Text style={styles.rowSpeaker}>{item.speaker}</Text>
+				Medical History : {item.medhx}
+			</Text> : null}
+				{item.medhx !== '' ?
+			<Text style={styles.rowTitle} >
+				Medication : {item.medication}
+			</Text> : null}
+		
 	</ScrollView>;
 	}
 
@@ -158,11 +222,16 @@ render() {
 		return (<ActivityIndicator />)
 	} else {
 		let test = this.props.profiles.data
+		console.log('SENDING IN: ', test[0])
 		for (let o in test) {
-			testProf = formatUserData(test[0]);
+			testProf = formatUserData(test[0])
+		//	allergyProf = formatUserAllergy(test[0])
+			medhx = formatUserMed(test[0])
 		}
 	}
 	displaySection.push(testProf)
+	//displaySection.push(allergyProf)
+	displaySection.push(medhx)
 	
   return (
     <View style={styles.container}>
@@ -182,6 +251,7 @@ render() {
 				renderSectionHeader={this.renderSectionHeader}
 				keyExtractor={(item, index) => item + index}
 				/> : <ActivityIndicator /> } 
+				
     </View>
     )
   }

@@ -9,7 +9,7 @@ export const getProfiles = () => {
   return async (dispatch) => {
     try {
       const payload = await profiles.getProfiles()
-      console.log('GETTING PAYLOAD:  ', payload)
+    //  console.log('GETTING PAYLOAD:  ', payload)
       dispatch({
         type: GET_PROFILES,
         payload

@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, CheckBox } from 'react-native';
+import { View, ScrollView, StyleSheet, CheckBox, ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { Container, Header, Content, ListItem, Body, Title, Text, Form} from 'native-base'
@@ -17,9 +17,11 @@ class AddAllergy extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      id:'',
-      allergy_name:'',
-      checked: false,
+      allergies: [{
+        "allergy_name":'',
+        "id":1,
+        "checked":false
+      }],
       isReady: false,
     }
     
@@ -53,8 +55,19 @@ class AddAllergy extends React.Component {
 
   onPress = (id) => { 
     console.log('IN ON PRESS WITH ID:    ', id)
+    let allergyId = []
     let tempState = {...this.state}
-    console.log('TEMP IS: ', tempState)
+    
+    tempState.allergies.map((allergy) => {
+      if(allergy.id === id) {
+        allergy.checked = !allergy.checked
+      }
+      return allergy
+    })
+    
+    this.setState(...this.state,tempState)
+
+    console.log("FINALLY HERERERERE", this.state)
 
   }
   
@@ -65,12 +78,12 @@ class AddAllergy extends React.Component {
     if (!this.state.isReady) {
       return <Expo.AppLoading />
     }
-    console.log('IN ADDALLERGY:!!!! !!!', this.state)
+    
     return (
       <Container style={styles.container}>
 			  <Header style={styles.navbar}><Title>ALLERGIES</Title></Header>		
           <Content>
-          <Allergies allergies={this.state.allergies} onPress={this.onPress}/>
+           {this.state.allergies === undefined ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
             <AddAllergyForm />
 	        </Content>
 	    </Container>

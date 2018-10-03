@@ -14,6 +14,7 @@ import AppNavigation from './navigation/AppNavigation';
 
 
 export default class App extends React.Component {
+  
   async componentWillMount() {
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
@@ -26,6 +27,7 @@ export default class App extends React.Component {
     return <Provider store={store()}>
 			<View style={styles.container}>
         <AppNavigation />
+        {/* <AddAllergy /> */}
 			</View>
 		</Provider>;
   }

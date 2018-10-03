@@ -12,18 +12,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ login }, dispatch)
 
 
 
-
-
-
-
-// onButtonPress = () => {
-//   try {
-//     this.props.login(this.state)
-//   } catch(e) {
-//     console.log('CREATE NEW USER',e)
-//   }
-// }
-
 class LoginForm extends React.Component {
   constructor(props) {
     super(props)
@@ -31,7 +19,7 @@ class LoginForm extends React.Component {
   }
 
   static navigationOptions = {
-    title: 'SignIn'
+    title: 'Please Sign In'
   }
 
   onEmailChange = event => {
@@ -65,14 +53,14 @@ class LoginForm extends React.Component {
 				<Button 
           style={styles.button} 
           onPress={() => {
-						this.props.login(this.state);
+						this.props.login(this.state)
 					}} 
           title="Sign In" />
 				<Button 
           style={styles.newUser} 
           onPress={() => {
-						console.log('PRESSED1');
-						// this.props.login(this.state)
+						console.log('PRESSED1 ');
+            this.props.navigation.navigate('SignUp')
 					}} 
           title="New User" />
 			</View>
@@ -80,8 +68,14 @@ class LoginForm extends React.Component {
   }
 }
 
-const onButtonPress =  () => {
+const onButtonPress =  async () => {
   this.props.login(this.state)
+  const userToken = await AsyncStorage.getItem('token');
+  //console.log('USERTOKEN: ', this.props.navigation)
+
+  // This will switch to the App screen or Auth screen and this loading
+  // screen will be unmounted and thrown away.
+  this.props.navigation.navigate('App');
 }
 
 const styles = StyleSheet.create({
