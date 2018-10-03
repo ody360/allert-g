@@ -22,7 +22,7 @@ export const addAllergies = (body) => {
     try {
       await allergies.addAllergies(body)
       const payload = await allergies.getAllergies();
-  //    console.log('PAYLOAD RECEIVED FROM ADD: ', payload)
+  
       dispatch({
         type: ADD_ALLERGIES,
         payload

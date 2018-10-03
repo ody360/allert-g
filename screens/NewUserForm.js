@@ -7,6 +7,7 @@ import DatePicker from 'react-native-datepicker'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { Content, ListItem, Radio, Right, Left, Button } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+var moment = require('moment')
 
 
 export default class NewUserForm extends React.Component {
@@ -31,7 +32,8 @@ export default class NewUserForm extends React.Component {
 		return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
 			resetScrollToCoords={{ x: 0, y: 0 }}
 			contentContainerStyle={styles.container}
-			scrollEnabled={false}>
+			scrollEnabled={false}
+			enableOnAndroid={true} >
 			
 			<ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }} 
         keyboardDismissMode="interactive"
@@ -39,15 +41,15 @@ export default class NewUserForm extends React.Component {
 				
 					<Avatar medium rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg' }} onPress={() => console.log('Works!')} activeOpacity={0.7} />
 					<FormLabel>Name</FormLabel>
-					<FormInput placeholder="First Name" />
-					<FormInput placeholder="Last Name" />
+				<FormInput textInputRef="first_name" placeholder="First Name"  onChangeText={(text) => this.setState({ first_name: text })} />
+					<FormInput placeholder="Last Name" onChangeText={(text) => this.setState({ last_name: text })} />
 
 					<FormLabel>Email</FormLabel>
-					<FormInput placeholder="user@test.com" />
+					<FormInput placeholder="user@test.com" onChangeText={(text) => this.setState({ email: text })}/>
 					<FormLabel>Password</FormLabel>
-					<FormInput placeholder="Last Name" />
+					<FormInput placeholder="Password" onChangeText={(text) => this.setState({ password: text })}/>
 					<FormLabel>Confirm Password</FormLabel>
-					<FormInput placeholder="Last Name" />
+					<FormInput placeholder="Confirm Password" />
 
 					<DatePicker style={{ width: 200 }} date={this.state.birthdate} androidMode="spinner" placeholder="select date" format="MM-DD-YYYY" minDate="1900-05-01" maxDate="2018-06-01" confirmBtnText="Confirm" cancelBtnText="Cancel" customStyles={{ dateIcon: { position: 'absolute', left: 0, top: 4, marginLeft: 0 }, dateInput: { marginLeft: 36 } }
 							// ... You can check the source to find the other keys.
@@ -55,28 +57,16 @@ export default class NewUserForm extends React.Component {
 							this.setState({ birthdate: date });
 						}} />
 					<Content>
-						{/* <ListItem>
-							<Left>
-								<Text>Male</Text>
-							</Left>
-							<Right>
-								<Radio selected={false} />
-							</Right>
-							<Left>
-								<Text>Female</Text>
-							</Left>
-							<Right>
-								<Radio selected={true} />
-							</Right>
-						</ListItem> */}
 						<RadioForm
 							radio_props={radio_props}
-							initial={0}
-							onPress={(value) => { this.setState({ value: value }) }}
+							initial={null}
+							onPress={(value) => { this.setState({ sex: value }) }}
 						/>
 					</Content>
 
-					<Button full info onPress={() => {this.props.navigation.navigate('Allergy')}}>
+					<Button full info onPress={() => {
+							console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
+							this.props.navigation.navigate('Contacts')}}>
 						<Text>Continue</Text>
 					</Button>
 					<Text> </Text>
@@ -91,9 +81,27 @@ export default class NewUserForm extends React.Component {
   }
 }
 
+onChange = (event) => {
+	this.setState({
+		[event.target.name]: event.target.value
+	})
+}
+
+onEmailChange = event => {
+	let newState = { ...this.state }
+	newState.email = event
+	this.setState(...this.state, newState);
+}
+
+onPasswordChange = event => {
+	let newState = { ...this.state }
+	newState.password = event
+	this.setState(...this.state, newState);
+}
+
 var radio_props = [
-	{ label: 'Male', value: 0 },
-	{ label: 'Female', value: 1 }
+	{ label: 'Male', value: 'm' },
+	{ label: 'Female', value: 'f' }
 ]
 
 const styles = StyleSheet.create({

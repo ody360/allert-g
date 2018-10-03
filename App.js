@@ -11,6 +11,7 @@ import AddAllergy from './screens/AddAllergy';
 import AddAllergyForm from './components/AddAllergyForm'
 import AddMedHx from './screens/AddMedHx'
 import AppNavigation from './navigation/AppNavigation';
+import UserContactsForm from './screens/UserContactsForm'
 
 
 export default class App extends React.Component {
@@ -28,6 +29,7 @@ export default class App extends React.Component {
 			<View style={styles.container}>
         <AppNavigation />
         {/* <AddAllergy /> */}
+        {/* <NewUserForm /> */}
 			</View>
 		</Provider>;
   }

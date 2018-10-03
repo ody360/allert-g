@@ -7,9 +7,10 @@ import AuthLoadingScreen from './AuthLoadingScreen'
 import AddAllergy from '../screens/AddAllergy';
 import PartyProfile from '../screens/PartyProfile';
 import AddMedHx from '../screens/AddMedHx';
+import UserConstactsForm from '../screens/UserContactsForm'
 
 const AppStack = createStackNavigator({ Home: UserProfile, Other: PartyProfile })
-const AuthStack = createStackNavigator({ Auth: LoginForm, SignUp: NewUserForm, Allergy: AddAllergy, Hx: AddMedHx });
+const AuthStack = createStackNavigator({ Auth: LoginForm, SignUp: NewUserForm, Contacts: UserConstactsForm, Allergy: AddAllergy, Hx: AddMedHx });
 
 export default createSwitchNavigator(
 	{
