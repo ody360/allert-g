@@ -7,10 +7,16 @@ import DatePicker from 'react-native-datepicker'
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 import { Content, ListItem, Radio, Right, Left, Button } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { updateProfile } from '../actions/profiles';
 var moment = require('moment')
 
 
-export default class NewUserForm extends React.Component {
+const mapStateToProps = ({ profiles }) => ({ profiles });
+const mapDispatchToProps = dispatch => bindActionCreators({ updateProfile }, dispatch);
+
+
+
+class NewUserForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -29,13 +35,14 @@ export default class NewUserForm extends React.Component {
 	
 
   render() {
-		return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
-			resetScrollToCoords={{ x: 0, y: 0 }}
-			contentContainerStyle={styles.container}
-			scrollEnabled={false}
-			enableOnAndroid={true} >
+		// return <KeyboardAwareScrollView 
+		// 	style={{ backgroundColor: '#4c69a5' }}
+		// 	resetScrollToCoords={{ x: 0, y: 0 }}
+		// 	contentContainerStyle={styles.container}
+		// 	scrollEnabled={false}
+		// 	enableOnAndroid={true} >
 			
-			<ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }} 
+		return	<ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }} 
         keyboardDismissMode="interactive"
         overScrollMode='always'>
 				
@@ -65,7 +72,8 @@ export default class NewUserForm extends React.Component {
 					</Content>
 
 					<Button full info onPress={() => {
-							console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
+							this.props.updateProfile(this.state)
+							console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.props.profiles)
 							this.props.navigation.navigate('Contacts')}}>
 						<Text>Continue</Text>
 					</Button>
@@ -77,27 +85,10 @@ export default class NewUserForm extends React.Component {
 				<Text> </Text>
 				
 			</ScrollView>
-		</KeyboardAwareScrollView>
+	//	</KeyboardAwareScrollView>
   }
 }
 
-onChange = (event) => {
-	this.setState({
-		[event.target.name]: event.target.value
-	})
-}
-
-onEmailChange = event => {
-	let newState = { ...this.state }
-	newState.email = event
-	this.setState(...this.state, newState);
-}
-
-onPasswordChange = event => {
-	let newState = { ...this.state }
-	newState.password = event
-	this.setState(...this.state, newState);
-}
 
 var radio_props = [
 	{ label: 'Male', value: 'm' },
@@ -127,4 +118,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     
 	},
-});
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewUserForm)

@@ -1,4 +1,4 @@
-import { GET_PROFILES, GET_PROFILES_ID } from '../actions/profiles';
+import { GET_PROFILES, GET_PROFILES_ID, UPD_PROFILES } from '../actions/profiles';
 
 const initialState =
 {
@@ -15,7 +15,7 @@ const initialState =
   "created_at": "",
   "updated_at": "",
   "users_id": 1,
-  "allergies_id": 1,
+  "allergies_id": [],
   "medhx": "",
   "medication": ""
 }
@@ -28,6 +28,9 @@ function profiles(state = initialState, { type, payload }) {
       return payload;
 
     case GET_PROFILES_ID:
+      return payload;
+
+    case UPD_PROFILES:
       return payload;
 
     default:

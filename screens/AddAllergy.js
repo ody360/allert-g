@@ -6,10 +6,11 @@ import { Container, Header, Content, ListItem, Body, Title, Text, Form, Button} 
 import Dimensions from 'Dimensions'
 import Allergies from '../components/Allergies'
 import {getAllergies, addAllergies} from '../actions/allergies'
+import { updateProfile } from '../actions/profiles'
 import AddAllergyForm from '../components/AddAllergyForm';
 
-const mapStateToProps = ({ allergies }) => ({ allergies });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getAllergies, addAllergies }, dispatch)
+const mapStateToProps = ({ allergies, profiles }) => ({ allergies, profiles });
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getAllergies, addAllergies, updateProfile }, dispatch)
 
 
 
@@ -23,6 +24,7 @@ class AddAllergy extends React.Component {
         "checked":false
       }],
       isReady: false,
+      allergies_id: []
     }
     
     console.log()
@@ -51,9 +53,26 @@ class AddAllergy extends React.Component {
      })
   }
 
+  createAllergyArray = () => {
+    const allergySet = new Set()
+    let tempState = {...this.state}
+
+    tempState.allergies.map((allergy) => {
+      if(allergy.checked) allergySet.add(allergy.id)
+    })
+    // tempState.allergies_id = [...allergySet]
+
+    // this.setState({allergies_id:[...this.state.allergies_id, ...allergySet]})
+    // console.log('CREATE COMPLETE.  STATE IS: ', this.state)
+
+    //this.setState((state) => update(state,{allergies_id: {$push: [...allergySet]}}))
+    this.setState(...this.state, { new_key: [2,3]})
+
+    console.log('CREATE COMPLETE: STATE IS: ', this.state)
+  }
+
   onPress = (id) => { 
     console.log('IN ON PRESS WITH ID:    ', id)
-    let allergyId = []
     let tempState = {...this.state}
     
     tempState.allergies.map((allergy) => {
@@ -65,8 +84,18 @@ class AddAllergy extends React.Component {
     
     this.setState(...this.state,tempState)
 
-  
+  }
 
+  testfn = () => {
+    
+    let tempState = { ...this.state }
+   // console.log('IDS ARE: ', tempState.allergies_id)
+
+    tempState.allergies_id = [1,2,3]
+
+    console.log('TEMPSTATE: ', tempState)
+    this.setState(...this.state, tempState)
+    console.log( 'STATE IS NOW: ', this.state)
   }
   
 
@@ -84,7 +113,15 @@ class AddAllergy extends React.Component {
            {this.state.allergies === undefined ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
             <AddAllergyForm />
 	        </Content>
-        <Button full info onPress={() => { this.props.navigation.navigate('Hx') }}>
+        <Button full info 
+          onPress={() => { 
+          // create allergy array to pass:
+            this.testfn(this.state)
+            this.createAllergyArray()
+          {/* this.props.updateProfile(this.state)
+          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.props.profiles) */}
+          //this.props.navigation.navigate('Hx') 
+          }}>
           <Text>Continue</Text>
         </Button>
 	    </Container>

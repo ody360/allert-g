@@ -1,40 +1,37 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { TextInput, View, StyleSheet, Text, ScrollView, Image, KeyboardAvoidingView } from 'react-native';
-import { Avatar, Divider, FormInput, FormLabel, FormValidation } from 'react-native-elements';
+import { TextInput, View, StyleSheet, Text, ScrollView, Image, KeyboardAvoidingView } from 'react-native'
+import { Avatar, Divider, FormInput, FormLabel, FormValidation } from 'react-native-elements'
 import { Content, ListItem, Radio, Right, Left, Button } from 'native-base'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { updateProfile } from '../actions/profiles'
 var moment = require('moment')
 
+const mapStateToProps = ({ profiles }) => ({ profiles })
+const mapDispatchToProps = dispatch => bindActionCreators({ updateProfile }, dispatch)
 
-export default class UserContactsForm extends React.Component {
+class UserContactsForm extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      first_name: '',
-      last_name: '',
-      email: '',
-      birthdate: '',
-      sex: '',
       home_phone: '',
       cell_phone: '',
       emergency1: '',
-      emergency2: '',
-
+      emergency2: ''
     }
   }
 
 
   render() {
-    return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
-      resetScrollToCoords={{ x: 0, y: 0 }}
-      contentContainerStyle={styles.container}
-      scrollEnabled={false}
-      enableOnAndroid={true} >
+    // return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
+    //   resetScrollToCoords={{ x: 0, y: 0 }}
+    //   contentContainerStyle={styles.container}
+    //   scrollEnabled={false}
+    //   enableOnAndroid={true} >
       
 
-      <ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }}
+      return <ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }}
         keyboardDismissMode="interactive"
         overScrollMode='always'>
 
@@ -52,7 +49,8 @@ export default class UserContactsForm extends React.Component {
 
        
         <Button full info onPress={() => {
-          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
+          this.props.updateProfile(this.state)
+          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.props.profiles)
           this.props.navigation.navigate('Allergy')
         }}>
           <Text>Continue</Text>
@@ -60,32 +58,10 @@ export default class UserContactsForm extends React.Component {
       
 
       </ScrollView>
-    </KeyboardAwareScrollView>
+  //  </KeyboardAwareScrollView>
   }
 }
 
-onChange = (event) => {
-  this.setState({
-    [event.target.name]: event.target.value
-  })
-}
-
-onEmailChange = event => {
-  let newState = { ...this.state }
-  newState.email = event
-  this.setState(...this.state, newState);
-}
-
-onPasswordChange = event => {
-  let newState = { ...this.state }
-  newState.password = event
-  this.setState(...this.state, newState);
-}
-
-var radio_props = [
-  { label: 'Male', value: 'm' },
-  { label: 'Female', value: 'f' }
-]
 
 const styles = StyleSheet.create({
   container: {
@@ -111,4 +87,6 @@ const styles = StyleSheet.create({
     color: '#fff',
 
   },
-});
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserContactsForm)
