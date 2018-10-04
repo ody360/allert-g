@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { addAllergies } from '../actions/allergies'
-import { Card, FormLabel, FormInput, FormValidationMessage, Button} from 'react-native-elements'
-import { Container, Header, Content, Form, Item, Input, Label, Title } from 'native-base'
+import { Card, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import { Container, Header, Content, Form, Item, Input, Label, Title, Text, Button } from 'native-base';
 
 
 const mapDispatchToProps = dispatch => bindActionCreators({ addAllergies }, dispatch);
@@ -37,8 +37,8 @@ class AddAllergyForm extends React.Component {
 					</Item>
 				</Form>
 				<Button raised title="submit" onPress={() => {
-						this.props.addAllergies(this.state)
-					}} />
+						(this.props.addAllergies(this.state))
+					}}><Text>Submit</Text></Button>
 			</Content>
 		</Container>;
   }

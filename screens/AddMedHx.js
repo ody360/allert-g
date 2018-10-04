@@ -7,38 +7,42 @@ import Dimensions from 'Dimensions'
 
 
 export default class AddMedHx extends React.Component {
-  constructor() {
-    super()
-    this.state = { isReady: false }
+  constructor(props) {
+    super(props)
+    const tempState = this.props.navigation.getParam('state');
+    this.state = { 
+            medhx:'',
+            medication:''
+    }
   }
  
 
 
 
   render() {
-    return (
-      <Container style={styles.container}>
-        <Header> 
-        </Header>
-        <Content padder>
-          <Form>
-            <Textarea rowSpan={5} bordered placeholder="Medical History" />
-          </Form>
-         
-          <Form>
-            <Textarea rowSpan={5} bordered placeholder="Medication" />
-          </Form>
+    
+    return <Container style={styles.container}>
+			<Header />
+			<Content padder>
+				<Form>
+          <Textarea rowSpan={5} bordered placeholder="Medical History" onChangeText={(medhx) => {
+            this.setState({ medhx })
+            console.log('PRESSED1', this.state)
+            }} />
+				</Form>
 
-          <Button
-            style={styles.newUser}
-            onPress={() => {
-                console.log('PRESSED1');
-              }
-            }
-            title="SUBMIT" />
-        </Content>
-      </Container>
-    );
+				<Form>
+          <Textarea rowSpan={5} bordered placeholder="Medication" onChangeText={(medication) => {
+            this.setState({ medication })
+            console.log('IN MEDICATION', this.state)
+            }} />
+				</Form>
+
+				<Button style={styles.newUser} onPress={() => {
+						
+					}} title="SUBMIT" />
+			</Content>
+		</Container>;
   }
 } 
 

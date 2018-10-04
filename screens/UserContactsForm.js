@@ -6,24 +6,30 @@ import { Avatar, Divider, FormInput, FormLabel, FormValidation } from 'react-nat
 import { Content, ListItem, Radio, Right, Left, Button } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { updateProfile } from '../actions/profiles'
+
 var moment = require('moment')
 
 const mapStateToProps = ({ profiles }) => ({ profiles })
 const mapDispatchToProps = dispatch => bindActionCreators({ updateProfile }, dispatch)
 
+
 class UserContactsForm extends React.Component {
   constructor(props) {
     super(props)
+    const testState = this.props.navigation.getParam('state')
     this.state = {
+      ...testState,
       home_phone: '',
       cell_phone: '',
       emergency1: '',
       emergency2: ''
     }
+
   }
 
 
   render() {
+      console.log('CURRENT STATE OF STATE: ', this.state)
     // return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
     //   resetScrollToCoords={{ x: 0, y: 0 }}
     //   contentContainerStyle={styles.container}
@@ -49,9 +55,8 @@ class UserContactsForm extends React.Component {
 
        
         <Button full info onPress={() => {
-          this.props.updateProfile(this.state)
-          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.props.profiles)
-          this.props.navigation.navigate('Allergy')
+          ///this.props.updateProfile(...this.state)
+          this.props.navigation.navigate('Allergy', {'state': this.state})
         }}>
           <Text>Continue</Text>
         </Button>

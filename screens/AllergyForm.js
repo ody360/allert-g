@@ -1,8 +1,8 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, CheckBox, ActivityIndicator } from 'react-native';
+import { View, ScrollView, StyleSheet, CheckBox, ActivityIndicator  } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Container, Header, Content, ListItem, Body, Title, Text, Form, Button} from 'native-base'
+import { Container, Header, Content, ListItem, Body, Title, Text, Form, Button } from 'native-base';
 import Dimensions from 'Dimensions'
 import Allergies from '../components/Allergies'
 import {getAllergies, addAllergies} from '../actions/allergies'
@@ -14,10 +14,12 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ getAllergies, addA
 
 
 
-class AddAllergy extends React.Component {
+class AllergyForm extends React.Component {
   constructor(props) {
     super(props)
+    const testState = this.props.navigation.getParam('state')
     this.state = {
+      ...testState,
       allergies: [{
         "allergy_name":'',
         "id":1,
@@ -27,7 +29,6 @@ class AddAllergy extends React.Component {
       allergies_id: []
     }
     
-    console.log()
   }
 
   
@@ -60,19 +61,11 @@ class AddAllergy extends React.Component {
     tempState.allergies.map((allergy) => {
       if(allergy.checked) allergySet.add(allergy.id)
     })
-    // tempState.allergies_id = [...allergySet]
+    this.setState( {allergies_id: [...allergySet]})
 
-    // this.setState({allergies_id:[...this.state.allergies_id, ...allergySet]})
-    // console.log('CREATE COMPLETE.  STATE IS: ', this.state)
-
-    //this.setState((state) => update(state,{allergies_id: {$push: [...allergySet]}}))
-    this.setState(...this.state, { new_key: [2,3]})
-
-    console.log('CREATE COMPLETE: STATE IS: ', this.state)
   }
 
   onPress = (id) => { 
-    console.log('IN ON PRESS WITH ID:    ', id)
     let tempState = {...this.state}
     
     tempState.allergies.map((allergy) => {
@@ -86,41 +79,27 @@ class AddAllergy extends React.Component {
 
   }
 
-  testfn = () => {
-    
-    let tempState = { ...this.state }
-   // console.log('IDS ARE: ', tempState.allergies_id)
-
-    tempState.allergies_id = [1,2,3]
-
-    console.log('TEMPSTATE: ', tempState)
-    this.setState(...this.state, tempState)
-    console.log( 'STATE IS NOW: ', this.state)
-  }
-  
-
 
   render() {
- 
     if (!this.state.isReady) {
       return <Expo.AppLoading />
     }
-    
+
     return (
       <Container style={styles.container}>
 			  <Header style={styles.navbar}><Title>ALLERGIES</Title></Header>		
           <Content>
            {this.state.allergies === undefined ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
-            <AddAllergyForm />
+            <AddAllergyForm key={this.state.allergies_id.length} />
 	        </Content>
         <Button full info 
           onPress={() => { 
-          // create allergy array to pass:
-            this.testfn(this.state)
             this.createAllergyArray()
-          {/* this.props.updateProfile(this.state)
-          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.props.profiles) */}
-          //this.props.navigation.navigate('Hx') 
+           // const newState = { ...this.testState, ...this.allergies_id}
+            
+            console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
+            this.props.navigation.navigate('Hx', { 'state': this.state })
+            //this.props.navigation.navigate('Hx') 
           }}>
           <Text>Continue</Text>
         </Button>
@@ -138,4 +117,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddAllergy)
+export default connect(mapStateToProps, mapDispatchToProps)(AllergyForm)

@@ -7,7 +7,7 @@ import { createSwitchNavigator, createStackNavigator } from 'react-navigation';
 import store from './store'
 import { Provider } from 'react-redux'
 import NewUserForm from './screens/NewUserForm'
-import AddAllergy from './screens/AddAllergy';
+import AllergyForm from './screens/AllergyForm';
 import AddAllergyForm from './components/AddAllergyForm'
 import AddMedHx from './screens/AddMedHx'
 import AppNavigation from './navigation/AppNavigation';
@@ -27,9 +27,9 @@ export default class App extends React.Component {
   render() {
     return <Provider store={store()}>
 			<View style={styles.container}>
-        <AppNavigation />
-        {/* <AddAllergy /> */}
-        {/* <NewUserForm /> */}
+				<AppNavigation />
+				{/* <AllergyForm /> */}
+				{/* <NewUserForm /> */}
 			</View>
 		</Provider>;
   }

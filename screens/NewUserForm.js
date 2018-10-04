@@ -72,9 +72,8 @@ class NewUserForm extends React.Component {
 					</Content>
 
 					<Button full info onPress={() => {
-							this.props.updateProfile(this.state)
-							console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.props.profiles)
-							this.props.navigation.navigate('Contacts')}}>
+							//this.props.updateProfile(this.state)
+							this.props.navigation.navigate('Contacts', {'state':this.state})  }}>
 						<Text>Continue</Text>
 					</Button>
 					<Text> </Text>

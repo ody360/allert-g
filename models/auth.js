@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {AsyncStorage} from 'react-native'
-//import BASE_URL from '../components/Constants'
-const BASE_URL ='http://192.168.0.20:5000/api'
+import { BASE_URL } from '../components/Constants'
 
 const login = async (email,password) => {
   const body = {

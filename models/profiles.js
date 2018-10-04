@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { AsyncStorage } from 'react-native'
-// import BASE_URL from '../components/Constants'
-const BASE_URL = 'http://192.168.0.20:5000/api'
+import { BASE_URL } from '../components/Constants'
 
 const getProfiles = async () => {
   //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOnsiaWQiOjJ9LCJpYXQiOjE1Mzg0MjUxNjQsImV4cCI6MTU0NzA2NTE2NH0.wM2WduKuK17kOlFKnZ8CErHA23fIZlyXcnsxF9xUiBI';

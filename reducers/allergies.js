@@ -8,7 +8,7 @@ const initialState =
 }
 
 
-function allergies(state = initialState, { type, payload }) {
+function allergies (state = initialState, { type, payload }) {
 
   switch (type) {
 		case GET_ALLERGIES:
