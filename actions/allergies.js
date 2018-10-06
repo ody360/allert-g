@@ -33,10 +33,10 @@ export const addAllergies = (body) => {
   }
 }
 
-export const checkAllergies = (id) => {
+export const checkAllergies = () => {
   return async (dispatch) => {
     try {
-      const payload = await allergies.checkAllergies(id)
+      const payload = await allergies.checkAllergies()
       dispatch({
         type: CHECK_ALLERGIES,
         Payload

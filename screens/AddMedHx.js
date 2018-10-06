@@ -10,7 +10,8 @@ export default class AddMedHx extends React.Component {
   constructor(props) {
     super(props)
     const tempState = this.props.navigation.getParam('state');
-    this.state = { 
+    this.state = {
+            ...tempState,
             medhx:'',
             medication:''
     }
@@ -27,18 +28,20 @@ export default class AddMedHx extends React.Component {
 				<Form>
           <Textarea rowSpan={5} bordered placeholder="Medical History" onChangeText={(medhx) => {
             this.setState({ medhx })
-            console.log('PRESSED1', this.state)
             }} />
 				</Form>
 
 				<Form>
           <Textarea rowSpan={5} bordered placeholder="Medication" onChangeText={(medication) => {
             this.setState({ medication })
-            console.log('IN MEDICATION', this.state)
             }} />
 				</Form>
 
 				<Button style={styles.newUser} onPress={() => {
+          this.setState(...this.state,this.tempState)
+          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
+          this.props.navigation.navigate('Disclaimer', { state: this.state });
+
 						
 					}} title="SUBMIT" />
 			</Content>

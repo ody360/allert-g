@@ -49,20 +49,22 @@ class AllergyForm extends React.Component {
       
     })
     this.setState({
-      
       isReady: true,
      })
   }
 
-  createAllergyArray = () => {
+  createAllergyArray = async () => {
     const allergySet = new Set()
     let tempState = {...this.state}
 
+    console.log('TEMPSTATE IS: ', tempState)
     tempState.allergies.map((allergy) => {
       if(allergy.checked) allergySet.add(allergy.id)
     })
-    this.setState( {allergies_id: [...allergySet]})
 
+    console.log('THE ALLERGIES LIST IS NOW:  ', allergySet)
+    await this.setState( {allergies_id: [...allergySet]})
+    
   }
 
   onPress = (id) => { 
@@ -81,6 +83,7 @@ class AllergyForm extends React.Component {
 
 
   render() {
+   // console.log('FINAL CHECK:!!!!, ', this.state.allergies_id)
     if (!this.state.isReady) {
       return <Expo.AppLoading />
     }
@@ -89,17 +92,16 @@ class AllergyForm extends React.Component {
       <Container style={styles.container}>
 			  <Header style={styles.navbar}><Title>ALLERGIES</Title></Header>		
           <Content>
-           {this.state.allergies === undefined ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
+           {this.state.allergies.length <= 1 ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
             <AddAllergyForm key={this.state.allergies_id.length} />
 	        </Content>
         <Button full info 
           onPress={() => { 
             this.createAllergyArray()
-           // const newState = { ...this.testState, ...this.allergies_id}
             
             console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
             this.props.navigation.navigate('Hx', { 'state': this.state })
-            //this.props.navigation.navigate('Hx') 
+           
           }}>
           <Text>Continue</Text>
         </Button>

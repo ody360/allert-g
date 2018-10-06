@@ -12,65 +12,15 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getProfiles, getProfilesId } from '../actions/profiles';
+import { getProfiles, getProfilesId } from '../actions/profiles'
+import { checkAllergies } from '../actions/allergies'
 import ToggleButton from '../components/ToggleButton'
 import Dimensions from 'Dimensions'
 
 const testProf = {}
 
-const mapStateToProps = ({ profiles }) => ({ profiles });
-const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, getProfilesId }, dispatch);
-
-
-const testProfile = [
-	{
-		title:  'MAIN USER PROFILE',
-		data: [
-			{
-				first_name: 'Clark',
-				last_name: 'Kent',
-				email: 'super@man.com',
-				birthdate: '1978-08-04',
-				sex: 'm',
-				home_phone: '3604790142',
-				cell_phone: '3601111111',
-				emergency1: '3602222222',
-				emergency2: '3603333333',
-			},
-		],
-	},
-	// {
-	// 	title: 'ALLERGIES',
-	// 	data: [
-	// 		{
-	// 			'0': 'peanut',
-	// 			'1': 'avocado',
-	// 			'2': 'kryptonite'
-	// 		}
-	// 	],
-	// },
-	// {
-	// 	title: 'MEDICATION',
-	// 	data: [
-	// 		{
-	// 			'0': 'peanut',
-	// 			'1': 'avocado',
-	// 			'2': 'kryptonite'
-	// 		}
-	// 	],
-	// },
-	// {
-	// 	title: 'MEDICAL HISTORY',
-	// 	data: [
-	// 		{
-	// 			'0': 'peanut',
-	// 			'1': 'avocado',
-	// 			'2': 'kryptonite'
-	// 		}
-	// 	],
-	// },
-]
-
+const mapStateToProps = ({ profiles, allergies }) => ({ profiles, allergies });
+const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, getProfilesId, checkAllergies }, dispatch);
 
 
 const formatUserData = (obj) => {
@@ -96,16 +46,16 @@ const formatUserData = (obj) => {
 	return result
 }
 
-// const formatUserAllergy = obj => {
-// 	let result = {}
-// 	let profile = obj
-// 	result.title = 'ALLERGIES';
-// 	result.data = []
+const formatUserAllergy = obj => {
+	let result = {}
+	let profile = obj
+	result.title = 'ALLERGIES';
+	result.data = []
 
-// //	result.data.push(profile)
+//	result.data.push(profile)
  
-// 	return result
-// }
+	return result
+}
 
 const formatUserMed = obj => {
 	let result = {}
@@ -133,6 +83,7 @@ const formatUserMed = obj => {
 
 
 class UserProfile extends React.Component {
+	
 	static navigationOptions = {
 		title: 'Allert Group Application',
 	}
@@ -144,10 +95,11 @@ class UserProfile extends React.Component {
 		}
 	}
 	async componentDidMount() {
-		await this.props.getProfilesId(1)
+		const profiles = await this.props.getProfilesId()
+		await this.props.checkAllergies(profiles.data[0].id)
 		this.setState({
 			...this.state,
-			profiles: this.props.profiles
+			profiles,
 		})
 	}
 
@@ -155,7 +107,6 @@ class UserProfile extends React.Component {
 renderItem = ({ item }) => {
 
 	return <ScrollView style={styles.row} key={item.key} onPress={() => this._handlePressRow(item)}>
-			
 			{item.first_name !== '' ?
 			<Text style={styles.rowTitle} >
 				NAME: {item.first_name} 	{item.last_name}
@@ -222,7 +173,6 @@ render() {
 		return (<ActivityIndicator />)
 	} else {
 		let test = this.props.profiles.data
-		console.log('SENDING IN: ', test[0])
 		for (let o in test) {
 			testProf = formatUserData(test[0])
 		//	allergyProf = formatUserAllergy(test[0])
@@ -242,7 +192,7 @@ render() {
           value={this.state.selection}
           onPressItem={this.handlePressItem} />
       </ImageBackground>
-			
+		
 			{ displaySection[0].data.length !== undefined ? 
 			<SectionList
 				style={styles.list}

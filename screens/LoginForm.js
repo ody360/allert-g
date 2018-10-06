@@ -52,8 +52,9 @@ class LoginForm extends React.Component {
 			<View>
 				<Button 
           style={styles.button} 
-          onPress={() => {
-						this.props.login(this.state)
+          onPress={async () => {
+						await this.props.login(this.state)
+            this.props.navigation.navigate('AuthLoading')
 					}} 
           title="Sign In" />
 				<Button 
@@ -70,12 +71,12 @@ class LoginForm extends React.Component {
 
 const onButtonPress =  async () => {
   this.props.login(this.state)
-  const userToken = await AsyncStorage.getItem('token');
+  //const userToken = await AsyncStorage.getItem('token');
   //console.log('USERTOKEN: ', this.props.navigation)
 
   // This will switch to the App screen or Auth screen and this loading
   // screen will be unmounted and thrown away.
-  this.props.navigation.navigate('App');
+  //this.props.navigation.navigate('App');
 }
 
 const styles = StyleSheet.create({

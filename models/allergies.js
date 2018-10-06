@@ -21,5 +21,20 @@ const addAllergies = async (name) => {
 	} catch (e) {console.log('Could not post allergy: ', e)}
 }
 
+const checkAllergies = async () => {
+	try {
+		const token = await AsyncStorage.getItem('token')
+		while (token.indexOf('"') != -1) {
+			token = token.replace('"', '')
+		}
+		let authorization = `Bearer ${token}`
+		const res = await axios.post(`${BASE_URL}/profiles/allergies`, { headers: { authorization } })
 
-export default { getAllergies, addAllergies };
+		return res.data
+	} catch (e) {
+		console.log('Could not load user alleregies' , e)
+	}
+}
+
+
+	export default { getAllergies, addAllergies, checkAllergies }

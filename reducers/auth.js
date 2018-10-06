@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from "../actions/auth"
+import { LOGIN, SIGNUP, LOGOUT } from "../actions/auth"
 
 const initialState = 
   { 
@@ -12,7 +12,8 @@ const initialState =
   
   switch (type) {
     case LOGIN:
-      return {...state, token: payload, isLoggedIn: true};
+    case SIGNUP:
+      return payload;
     
     default:
       return state;

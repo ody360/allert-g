@@ -84,7 +84,7 @@ const formatUserData = (obj) => {
   return result
 }
 
-const formatUserAllergy = obj => {
+const formatUserAllergy = (obj) => {
   let result = {}
   let profile = obj
   result.title = 'ALLERGIES';

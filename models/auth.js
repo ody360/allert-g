@@ -10,9 +10,17 @@ const login = async (email,password) => {
 
   try {
     const res = await axios.post(`${BASE_URL}/users/login`,body)
-   // console.log('IN LOGIN WITH RESPONSE:  ', res)
     return res.data
   } catch(e) { console.log("Could Not Log In: ", e)}
 }
 
-export default { login }
+const signup = async body => {
+	try {
+    const res = await axios.post(`${BASE_URL}/users/signup`, body)
+    console.log('IN MODELS SIGNUP WITH RESPONSE: DATA OF ', res.data)
+    return res.data
+	} catch (e) {
+		console.log('Models: Could not create user: ', e);
+	}
+};
+export default { login, signup }

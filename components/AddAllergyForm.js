@@ -38,6 +38,7 @@ class AddAllergyForm extends React.Component {
 				</Form>
 				<Button raised title="submit" onPress={() => {
 						(this.props.addAllergies(this.state))
+            this.value=null
 					}}><Text>Submit</Text></Button>
 			</Content>
 		</Container>;
