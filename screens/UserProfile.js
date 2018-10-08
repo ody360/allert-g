@@ -9,6 +9,7 @@ import {
 	SectionList,
 	ScrollView,
 	ActivityIndicator,
+	RefreshControl,
 } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -46,14 +47,16 @@ const formatUserData = (obj) => {
 	return result
 }
 
-const formatUserAllergy = obj => {
+const formatUserAllergy = arr => {
 	let result = {}
-	let profile = obj
-	result.title = 'ALLERGIES';
+	result.title = 'ALLERGIES'
 	result.data = []
 
-//	result.data.push(profile)
- 
+	for(let i of arr) {
+		console.log('MY NAME IS::: TTICIICIC' , i.allergy_name)
+		result.data.push({allergy_name: i.allergy_name})
+	}
+
 	return result
 }
 
@@ -91,64 +94,99 @@ class UserProfile extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			selection: 'PROFILE'
+			"allergy_name": "",
+			"checked": false,
+			"id": "",
+			selection: 'PROFILE',
+			refreshing: false
 		}
 	}
 	async componentDidMount() {
 		const profiles = await this.props.getProfilesId()
-		await this.props.checkAllergies(profiles.data[0].id)
+		const allergies = await this.props.checkAllergies()
+
+		
 		this.setState({
 			...this.state,
 			profiles,
+			...allergies
 		})
+	}
+
+	_onRefresh = () => {
+		this.setState({ refreshing: true })
+		async () => {
+			const profiles = await this.props.getProfilesId()
+			const allergies = await this.props.checkAllergies()
+			this.setState({
+					...this.state,
+					profiles,
+					...allergies
+				},
+				{ refreshing: false })
+		}
 	}
 
 	
 renderItem = ({ item }) => {
-
-	return <ScrollView style={styles.row} key={item.key} onPress={() => this._handlePressRow(item)}>
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				NAME: {item.first_name} 	{item.last_name}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				EMAIL:  {item.email}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				Birthdate: {item.birthdate}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				{item.sex === 'm' ? `Sex: Male`: `Sex: Female`}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				Home Phone: {item.home_phone}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				Cell Phone:   {item.cell_phone}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				Emergency1 : {item.emergency1}
-			</Text> : null}
-			{item.first_name !== '' ?
-			<Text style={styles.rowTitle} >
-				Emergency2 : {item.emergency2}
-			</Text> : null}
-			{item.medhx !== '' ?
-			<Text style={styles.rowTitle} >
-				Medical History : {item.medhx}
-			</Text> : null}
-				{item.medhx !== '' ?
-			<Text style={styles.rowTitle} >
-				Medication : {item.medication}
-			</Text> : null}
-		
-	</ScrollView>;
+	console.log('ITEM TO BE PROCESSEDDEEDDSSED:   ', item)
+	
+				return (
+					<ScrollView style={styles.row} key={item.key} onPress={() => this._handlePressRow(item)}
+						refreshControl={
+								<RefreshControl
+									refreshing={this.state.refreshing}
+									onRefresh={() => this._onRefresh}
+								/>}
+							>
+						
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							NAME: {item.first_name} 	{item.last_name}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							EMAIL:  {item.email}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							Birthdate: {item.birthdate}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							{item.sex === 'm' ? `Sex: Male`: `Sex: Female`}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							Home Phone: {item.home_phone}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							Cell Phone:   {item.cell_phone}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							Emergency1 : {item.emergency1}
+						</Text> : null}
+						{item.first_name !== '' ?
+						<Text style={styles.rowTitle} >
+							Emergency2 : {item.emergency2}
+						</Text> : null}
+						{item.medhx !== '' ?
+						<Text style={styles.rowTitle} >
+							Medical History : {item.medhx}
+						</Text> : null}
+							{item.medhx !== '' ?
+						<Text style={styles.rowTitle} >
+							Medication : {item.medication}
+						</Text> : null}
+							{item.allergy_name !== '' ?
+						<Text style={styles.rowTitle} >
+							{item.allergy_name}
+						</Text> : null}	
+					
+				</ScrollView>)
+			
 	}
 
 	renderSectionHeader = ({ section }) => {
@@ -175,13 +213,19 @@ render() {
 		let test = this.props.profiles.data
 		for (let o in test) {
 			testProf = formatUserData(test[0])
-		//	allergyProf = formatUserAllergy(test[0])
 			medhx = formatUserMed(test[0])
 		}
+	if(this.props.allergies.data === undefined) {
+		return <ActivityIndicator />
+	} else {
+		let allergies = this.props.allergies.data
+		allergyProf = formatUserAllergy(allergies)
+	}
+		
 	}
 	displaySection.push(testProf)
-	//displaySection.push(allergyProf)
 	displaySection.push(medhx)
+//	displaySection.push(allergyProf);
 	
   return (
     <View style={styles.container}>

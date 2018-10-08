@@ -12,14 +12,15 @@ import {
 } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getProfiles, getProfilesId } from '../actions/profiles';
+import { getProfiles, getProfilesId } from '../actions/profiles'
+import { getParty, getMembers} from '../actions/party'
 import ToggleButton from '../components/ToggleButton'
 import Dimensions from 'Dimensions'
 
 const testProf = {}
 
-const mapStateToProps = ({ profiles }) => ({ profiles });
-const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, getProfilesId }, dispatch);
+const mapStateToProps = ({ profiles, party }) => ({ profiles, party });
+const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, getProfilesId, getParty, getMembers }, dispatch);
 
 
 const testProfile = [
@@ -39,36 +40,6 @@ const testProfile = [
       },
     ],
   },
-  // {
-  // 	title: 'ALLERGIES',
-  // 	data: [
-  // 		{
-  // 			'0': 'peanut',
-  // 			'1': 'avocado',
-  // 			'2': 'kryptonite'
-  // 		}
-  // 	],
-  // },
-  // {
-  // 	title: 'MEDICATION',
-  // 	data: [
-  // 		{
-  // 			'0': 'peanut',
-  // 			'1': 'avocado',
-  // 			'2': 'kryptonite'
-  // 		}
-  // 	],
-  // },
-  // {
-  // 	title: 'MEDICAL HISTORY',
-  // 	data: [
-  // 		{
-  // 			'0': 'peanut',
-  // 			'1': 'avocado',
-  // 			'2': 'kryptonite'
-  // 		}
-  // 	],
-  // },
 ]
 
 
@@ -122,8 +93,12 @@ class PartyProfile extends React.Component {
   }
   async componentDidMount() {
     await this.props.getProfilesId(1)
+    const party = await this.props.getParty()
+    const members = await this.props.getMembers()
     this.setState({
       ...this.state,
+      ...party,
+      ...members,
       profiles: this.props.profiles
     })
   }

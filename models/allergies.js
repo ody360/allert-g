@@ -1,11 +1,10 @@
 import axios from 'axios'
 import {BASE_URL} from '../components/Constants'
-//const BASE_URL = 'http://10.5.80.142:5000/api'
+import { AsyncStorage } from 'react-native'
 
 const getAllergies = async () => {
 	//console.log('IN ACTION GET ALLERGIES: ')
 
-	console.log('BASEURL IS CURRENTLY:  ', BASE_URL)
 	try {
 		const res = await axios.get(`${BASE_URL}/allergies`)
 		return res.data.data
@@ -28,7 +27,7 @@ const checkAllergies = async () => {
 			token = token.replace('"', '')
 		}
 		let authorization = `Bearer ${token}`
-		const res = await axios.post(`${BASE_URL}/profiles/allergies`, { headers: { authorization } })
+		const res = await axios.get(`${BASE_URL}/profiles/allergies`, { headers: { authorization } })
 
 		return res.data
 	} catch (e) {
@@ -36,5 +35,14 @@ const checkAllergies = async () => {
 	}
 }
 
+const getOneAllergy = async (id) => {
+	try {
+		const res = await axios.get(`${BASE_URL}/allergies/${id}`)
+		return res.data 
+	} catch (e) {
+		console.log('Could no retrieve allergy name', e)
+	}
+}
 
-	export default { getAllergies, addAllergies, checkAllergies }
+
+export default { getAllergies, addAllergies, checkAllergies, getOneAllergy }

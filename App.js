@@ -12,6 +12,8 @@ import AddAllergyForm from './components/AddAllergyForm'
 import AddMedHx from './screens/AddMedHx'
 import AppNavigation from './navigation/AppNavigation';
 import UserContactsForm from './screens/UserContactsForm'
+import Preferences from './screens/Preferences'
+import AllergiesScreen from './screens/AllergiesScreen';
 
 
 export default class App extends React.Component {
