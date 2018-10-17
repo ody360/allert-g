@@ -36,10 +36,13 @@ class AddAllergyForm extends React.Component {
             <Input onChangeText={(text) => this.onChange(text)} />
 					</Item>
 				</Form>
-				<Button raised title="submit" onPress={() => {
-						(this.props.addAllergies(this.state))
-            this.value=null
-					}}><Text>Submit</Text></Button>
+				<Button raised title="submit" 
+                onPress={() => {
+						      (this.props.addAllergies(this.state))
+                  this.props.getAllergies()
+					      }}
+                value=''
+                ><Text>Add Allergy</Text></Button>
 			</Content>
 		</Container>;
   }

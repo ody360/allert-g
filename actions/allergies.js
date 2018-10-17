@@ -8,8 +8,7 @@ export const GET_ALLERGY_NAME = 'GET_ALLERGY_NAME'
 export const getAllergies = () => {
   return async (dispatch) => {
     try {
-      const payload = await model.getAllergies();
-      
+      const payload = await model.getAllergies()
       dispatch({
         type: GET_ALLERGIES,
         payload: payload,
@@ -22,12 +21,13 @@ export const addAllergies = (body) => {
   return async (dispatch) => {
     try {
       await model.addAllergies(body);
-      const payload = await model.getAllergies();
+      // const payload = await model.getAllergies();
   
       dispatch({
         type: ADD_ALLERGIES,
         payload
       })
+      dispatch(getAllergies())
     } catch (e) {
       console.log("ADD ALLERGY ERR: ", e)
     }
@@ -37,10 +37,10 @@ export const addAllergies = (body) => {
 export const checkAllergies = () => {
   return async (dispatch) => {
     try {
-      const payload = await model.checkAllergies();
+      const payload = await model.checkAllergies()
       dispatch({
         type: CHECK_ALLERGIES,
-        payload
+        payload: payload.data 
       })
     } catch (e) {
       console.log("Check Allergy Err", e)
@@ -53,6 +53,7 @@ export const getOneAllergy = (id) => {
     try {
       
       const payload = await model.getOneAllergy(id);
+
       dispatch({
         type: GET_ALLERGY_NAME,
         payload: payload.data[0]

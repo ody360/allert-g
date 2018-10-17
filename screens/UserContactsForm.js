@@ -29,7 +29,6 @@ class UserContactsForm extends React.Component {
 
 
   render() {
-      console.log('CURRENT STATE OF STATE:  ', this.state)
     // return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
     //   resetScrollToCoords={{ x: 0, y: 0 }}
     //   contentContainerStyle={styles.container}

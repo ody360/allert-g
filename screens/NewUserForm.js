@@ -35,12 +35,7 @@ class NewUserForm extends React.Component {
 	
 
   render() {
-		// return <KeyboardAwareScrollView 
-		// 	style={{ backgroundColor: '#4c69a5' }}
-		// 	resetScrollToCoords={{ x: 0, y: 0 }}
-		// 	contentContainerStyle={styles.container}
-		// 	scrollEnabled={false}
-		// 	enableOnAndroid={true} >
+
 			
 		return	<ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }} 
         keyboardDismissMode="interactive"
@@ -54,11 +49,11 @@ class NewUserForm extends React.Component {
 					<FormLabel>Email</FormLabel>
 					<FormInput placeholder="user@test.com" onChangeText={(text) => this.setState({ email: text })}/>
 					<FormLabel>Password</FormLabel>
-					<FormInput placeholder="Password" onChangeText={(text) => this.setState({ password: text })}/>
+					<FormInput placeholder="Password" secureTextEntry={true} onChangeText={(text) => this.setState({ password: text })}/>
 					<FormLabel>Confirm Password</FormLabel>
-					<FormInput placeholder="Confirm Password" />
+					<FormInput secureTextEntry={true} placeholder="Confirm Password" />
 
-					<DatePicker style={{ width: 200 }} date={this.state.birthdate} androidMode="spinner" placeholder="select date" format="MM-DD-YYYY" minDate="1900-05-01" maxDate="2018-06-01" confirmBtnText="Confirm" cancelBtnText="Cancel" customStyles={{ dateIcon: { position: 'absolute', left: 0, top: 4, marginLeft: 0 }, dateInput: { marginLeft: 36 } }
+					<DatePicker style={{ width: 200 }} date={this.state.birthdate} androidMode="spinner" placeholder="select date" format="YYYY-DD-MM" minDate="1900-05-01" maxDate="2018-06-01" confirmBtnText="Confirm" cancelBtnText="Cancel" customStyles={{ dateIcon: { position: 'absolute', left: 0, top: 4, marginLeft: 0 }, dateInput: { marginLeft: 36 } }
 							// ... You can check the source to find the other keys.
 						} onDateChange={date => {
 							this.setState({ birthdate: date });

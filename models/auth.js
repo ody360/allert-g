@@ -17,7 +17,6 @@ const login = async (email,password) => {
 const signup = async body => {
 	try {
     const res = await axios.post(`${BASE_URL}/users/signup`, body)
-    console.log('IN MODELS SIGNUP WITH RESPONSE: DATA OF ', res.data)
     return res.data
 	} catch (e) {
 		console.log('Models: Could not create user: ', e);

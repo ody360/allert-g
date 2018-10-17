@@ -7,7 +7,8 @@ import Dimensions from 'Dimensions'
 import Allergies from '../components/Allergies'
 import {getAllergies, addAllergies} from '../actions/allergies'
 import { updateProfile } from '../actions/profiles'
-import AddAllergyForm from '../components/AddAllergyForm';
+import AddAllergyForm from '../components/AddAllergyForm'
+import {AppLoading, Font} from 'expo'
 
 const mapStateToProps = ({ allergies, profiles }) => ({ allergies, profiles });
 const mapDispatchToProps = (dispatch) => bindActionCreators({ getAllergies, addAllergies, updateProfile }, dispatch)
@@ -35,17 +36,18 @@ class AllergyForm extends React.Component {
   async componentDidMount() {
     await this.props.getAllergies()
     this.setState({ 
-      ...this.state,
-      allergies:this.props.allergies
-    }
-    )
-    
+       ...this.state,
+        allergies:this.props.allergies
+      }
+    )   
   }
 
   async componentWillMount() {
     await Expo.Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+      'Roboto': require('../assets/fonts/Roboto-Regular.ttf'),
+      'Roboto_medium': require('../assets/fonts/Roboto-Medium.ttf'),
+      'Oswald-Regular': require('../assets/fonts/Oswald-Regular.ttf'),
+      'Oswald-Heavy': require('../assets/fonts/Oswald-Heavy.ttf')
       
     })
     this.setState({
@@ -57,12 +59,10 @@ class AllergyForm extends React.Component {
     const allergySet = new Set()
     let tempState = {...this.state}
 
-    console.log('TEMPSTATE IS: ', tempState)
     tempState.allergies.map((allergy) => {
       if(allergy.checked) allergySet.add(allergy.id)
     })
 
-    console.log('THE ALLERGIES LIST IS NOW:  ', allergySet)
     await this.setState( {allergies_id: [...allergySet]})
     
   }
@@ -83,7 +83,7 @@ class AllergyForm extends React.Component {
 
 
   render() {
-   // console.log('FINAL CHECK:!!!!, ', this.state.allergies_id)
+  
     if (!this.state.isReady) {
       return <Expo.AppLoading />
     }
@@ -99,7 +99,6 @@ class AllergyForm extends React.Component {
           onPress={() => { 
             this.createAllergyArray()
             
-            console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
             this.props.navigation.navigate('Hx', { 'state': this.state })
            
           }}>

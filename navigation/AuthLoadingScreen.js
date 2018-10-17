@@ -1,17 +1,30 @@
 import React from 'react';
-import { ActivityIndicator, AsyncStorage, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, StatusBar, Text, View } from 'react-native';
 
 export default class AuthLoadingScreen extends React.Component {
 	constructor(props) {
 		super(props);
 		this._bootstrapAsync()
+		state = {
+				fontLoaded: false
+			}
+		}
+
+		async componentDidMount() {
+			await Expo.Font.loadAsync({
+				'Roboto': require('../assets/fonts/Roboto-Regular.ttf'),
+				'Roboto-Medium': require('../assets/fonts/Roboto-Medium.ttf'),
+				'Oswald-Regular': require('../assets/fonts/Oswald-Regular.ttf'),
+				'Oswald-Heavy': require('../assets/fonts/Oswald-Heavy.ttf')
+			})
+
+	//	this.setState({ fontLoaded: true })
 	}
 
 	// Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-		//AsyncStorage.clear()
+	  //AsyncStorage.clear()
     const userToken = await AsyncStorage.getItem('token');
-    console.log('USERTOKEN:  ', userToken)
 
 		// This will switch to the App screen or Auth screen and this loading
 		// screen will be unmounted and thrown away.
@@ -22,8 +35,8 @@ export default class AuthLoadingScreen extends React.Component {
 	render() {
 		return (
 			<View>
-				<ActivityIndicator />
-        <Text>Preparing Application</Text>
+				<ActivityIndicator size={'large'} color={'red'}/>
+				<Text style={[{ fontWeight: 'bold' },{color:'red'}]}>Preparing Application</Text>
 				<StatusBar barStyle="default" />
 			</View>
 		);

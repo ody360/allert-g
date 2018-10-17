@@ -10,6 +10,10 @@ import {
 	ScrollView,
 	ActivityIndicator,
 	RefreshControl,
+	AsyncStorage,
+	AppLoading,
+	Button,
+	DrawerLayoutAndroid,
 } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
@@ -17,12 +21,22 @@ import { getProfiles, getProfilesId } from '../actions/profiles'
 import { checkAllergies } from '../actions/allergies'
 import ToggleButton from '../components/ToggleButton'
 import Dimensions from 'Dimensions'
-
+import {Font} from 'expo'
+import PartyProfile from './PartyProfile'
+import { createDrawerNavigator} from 'react-navigation'
+import AllergyForm from './AllergyForm';
 const testProf = {}
 
 const mapStateToProps = ({ profiles, allergies }) => ({ profiles, allergies });
 const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, getProfilesId, checkAllergies }, dispatch);
-
+const MyApp = createDrawerNavigator({
+	Home: {
+		screen: AllergyForm,
+	},
+	Notifications: {
+		screen: PartyProfile,
+	},
+});
 
 const formatUserData = (obj) => {
 	let result = {}
@@ -53,7 +67,6 @@ const formatUserAllergy = arr => {
 	result.data = []
 
 	for(let i of arr) {
-		console.log('MY NAME IS::: TTICIICIC' , i.allergy_name)
 		result.data.push({allergy_name: i.allergy_name})
 	}
 
@@ -89,7 +102,15 @@ class UserProfile extends React.Component {
 	
 	static navigationOptions = {
 		title: 'Allert Group Application',
-	}
+		drawerLabel: 'Home',
+		drawerIcon: ({tintColor}) => {
+			<Image
+				source={(require('../assets/images/icon.png'))}
+				style={[styles.icon, {tintColor: tintColor}]}
+				/>
+			}
+		}
+	
 
 	constructor(props) {
 		super(props)
@@ -97,40 +118,46 @@ class UserProfile extends React.Component {
 			"allergy_name": "",
 			"checked": false,
 			"id": "",
-			selection: 'PROFILE',
-			refreshing: false
+			selection: 'LOGOUT',
+			refreshing: false,
+			isReady: false,
 		}
 	}
 	async componentDidMount() {
-		const profiles = await this.props.getProfilesId()
-		const allergies = await this.props.checkAllergies()
+		await this.props.getProfilesId()
+		await this.props.checkAllergies() 
+		await Expo.Font.loadAsync({
+				'Roboto': require('../assets/fonts/Roboto-Regular.ttf'),
+				'Roboto_medium': require('../assets/fonts/Roboto-Medium.ttf'),
+				'Oswald-Regular': require('../assets/fonts/Oswald-Regular.ttf'),
+				'Oswald-Heavy': require('../assets/fonts/Oswald-Heavy.ttf')
 
-		
+		})
+
 		this.setState({
-			...this.state,
-			profiles,
-			...allergies
+				isReady: true,
 		})
 	}
+
+
 
 	_onRefresh = () => {
 		this.setState({ refreshing: true })
 		async () => {
-			const profiles = await this.props.getProfilesId()
-			const allergies = await this.props.checkAllergies()
+			await this.props.getProfilesId()
+			await this.props.checkAllergies()
 			this.setState({
 					...this.state,
-					profiles,
-					...allergies
-				},
-				{ refreshing: false })
+					refreshing: false 
+			})
 		}
 	}
 
 	
 renderItem = ({ item }) => {
-	console.log('ITEM TO BE PROCESSEDDEEDDSSED:   ', item)
-	
+				if(this.state.isReady === false) {
+					return <ActivityIndicator />
+				}	
 				return (
 					<ScrollView style={styles.row} key={item.key} onPress={() => this._handlePressRow(item)}
 						refreshControl={
@@ -200,7 +227,9 @@ renderItem = ({ item }) => {
 	}
 
 handlePressItem = (item) => {
-    this.setState({ selection: item })
+		this.setState({ selection: item })
+		AsyncStorage.clear()
+		this.props.navigation.navigate('Auth')
   }
 
 
@@ -210,31 +239,44 @@ render() {
 	if(this.props.profiles.data === undefined) {
 		return (<ActivityIndicator />)
 	} else {
-		let test = this.props.profiles.data
-		for (let o in test) {
-			testProf = formatUserData(test[0])
-			medhx = formatUserMed(test[0])
+		let user = this.props.profiles.data
+		for (let o in user) {
+			userProfile = formatUserData(user[0]);
+			medhx = formatUserMed(user[0]);
 		}
-	if(this.props.allergies.data === undefined) {
+	if(this.props.allergies.userAllergies === undefined) {
 		return <ActivityIndicator />
 	} else {
-		let allergies = this.props.allergies.data
+		let allergies = this.props.allergies.userAllergies
 		allergyProf = formatUserAllergy(allergies)
 	}
 		
 	}
-	displaySection.push(testProf)
+	displaySection.push(userProfile)
 	displaySection.push(medhx)
-//	displaySection.push(allergyProf);
+	var navigationView = (
+		<View style={{ flex: 1, backgroundColor: '#fff' }}>
+			<Text style={{ margin: 10, fontSize: 15, textAlign: 'left' }}>I'm in the Drawer!</Text>
+		</View>
+	)
 	
   return (
     <View style={styles.container}>
+			<DrawerLayoutAndroid
+				drawerWidth={300}
+				drawerPosition={DrawerLayoutAndroid.positions.Left}
+				renderNavigationView={() => navigationView}>		
       <ImageBackground style={styles.image} source={require('../assets/images/Immune-System2.jpg')}>
         <Text style={styles.title}>ALLERT - G</Text>
         <ToggleButton
-          items={['PROFILE','PARTY','PREFS']}
+          items={['LOGOUT']}
           value={this.state.selection}
           onPressItem={this.handlePressItem} />
+				<Button
+						onPress={() => DrawerLayoutAndroid.openDrawer()}
+						title="Go to drawer"
+				/>
+			
       </ImageBackground>
 		
 			{ displaySection[0].data.length !== undefined ? 
@@ -245,7 +287,7 @@ render() {
 				renderSectionHeader={this.renderSectionHeader}
 				keyExtractor={(item, index) => item + index}
 				/> : <ActivityIndicator /> } 
-				
+			</DrawerLayoutAndroid>
     </View>
     )
   }
@@ -286,18 +328,24 @@ const styles = StyleSheet.create({
 		padding: 20,
 	},
 	sectionHeaderText: {
-		fontSize: 13,
+		fontSize: 24,
+		fontFamily: 'Oswald-Regular',
 	},
 	row: {
 		backgroundColor: 'white',
 		padding: 20,
 	},
 	rowTitle: {
-		fontSize: 13,
+		fontSize: 14,
 		fontWeight: '500',
+		fontFamily: 'Roboto_medium',
 	},
 	rowSpeaker: {
 		fontSize: 13,
+	},
+	icon: {
+		width: 24,
+		height: 24,
 	},
 });
 

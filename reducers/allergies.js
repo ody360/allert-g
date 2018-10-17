@@ -2,22 +2,20 @@ import { GET_ALLERGIES, ADD_ALLERGIES, CHECK_ALLERGIES, GET_ALLERGY_NAME } from 
 
 const initialState =
 {
-	id:'',
-	allergy_name:'',
 	checked: false,
-	name: {},
 }
 
 
 function allergies (state = initialState, { type, payload }) {
-
   switch (type) {
 		case GET_ALLERGIES:
 		case ADD_ALLERGIES:
+			return {...state, payload}
 		case CHECK_ALLERGIES:
-			return payload;
+			return {...state, userAllergies: payload}
+			
 		case GET_ALLERGY_NAME:
-		 return {name: payload.allergy_name};
+		 return {...state, name: payload.allergy_name}
 		default:
 			return state;
   } 

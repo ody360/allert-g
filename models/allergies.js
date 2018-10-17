@@ -3,13 +3,12 @@ import {BASE_URL} from '../components/Constants'
 import { AsyncStorage } from 'react-native'
 
 const getAllergies = async () => {
-	//console.log('IN ACTION GET ALLERGIES: ')
 
 	try {
 		const res = await axios.get(`${BASE_URL}/allergies`)
 		return res.data.data
 	} catch (e) {
-		console.log('IN MODEL ERR: ', e)
+		console.log('IN Get Allergies Model ERR: ', e)
 	}
 }
 
@@ -40,7 +39,7 @@ const getOneAllergy = async (id) => {
 		const res = await axios.get(`${BASE_URL}/allergies/${id}`)
 		return res.data 
 	} catch (e) {
-		console.log('Could no retrieve allergy name', e)
+		console.log('Could not retrieve allergy name', e)
 	}
 }
 

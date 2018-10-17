@@ -1,5 +1,5 @@
 import React from 'react'
-import { createSwitchNavigator, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
+import { createDrawerNavigator, createSwitchNavigator, createMaterialTopTabNavigator, createStackNavigator } from 'react-navigation';
 import UserProfile from '../screens/UserProfile';
 import LoginForm from '../screens/LoginForm';
 import NewUserForm from '../screens/NewUserForm';
@@ -10,11 +10,14 @@ import AddMedHx from '../screens/AddMedHx';
 import UserConstactsForm from '../screens/UserContactsForm'
 import DisclaimerForm from '../screens/DisclaimerForm'
 import Preferences from '../screens/Preferences'
-import AllergiesScreen from '../screens/AllergiesScreen';
+import AllergiesScreen from '../screens/AllergiesScreen'
+import Emergency from '../screens/Emergency'
+import MainPage from '../screens/MainPage'
+import GroupScreen from '../screens/GroupScreen'
 
 
 
-const AppStack = createStackNavigator({ Home: UserProfile, Other: PartyProfile })
+const AppStack = createStackNavigator({ Home: MainPage, Group: GroupScreen })
 const AuthStack = createStackNavigator({
 	Auth: LoginForm,
 	SignUp: NewUserForm,
@@ -24,22 +27,26 @@ const AuthStack = createStackNavigator({
 	Disclaimer: DisclaimerForm
 })
 
+
 const AppStack2 = createMaterialTopTabNavigator({
 	Home: UserProfile,
 	Allergies: AllergiesScreen,
 	Party: PartyProfile,
-	Settings: Preferences,
-	Emergency: AllergyForm,
+	//Settings: Preferences,
+	Emergency: Emergency,
 	//Logout: AuthStack,
-});
+})
 
 export default createSwitchNavigator(
 	{
 		AuthLoading: AuthLoadingScreen,
-		App: AppStack2,
 		Auth: AuthStack,
+		App: AppStack,
 	},
 	{
 		initialRouteName: 'AuthLoading',
 	}
-);
+)
+
+
+const AppDrawerNavigator = createDrawerNavigator({Home: UserProfile, Other: PartyProfile })

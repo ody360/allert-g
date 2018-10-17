@@ -39,7 +39,6 @@ export default class AddMedHx extends React.Component {
 
 				<Button style={styles.newUser} onPress={() => {
           this.setState(...this.state,this.tempState)
-          console.log('MOVING TO NEXT SCREEN BUT CURRENT STATE:  ', this.state)
           this.props.navigation.navigate('Disclaimer', { state: this.state });
 
 						

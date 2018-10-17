@@ -1,36 +1,33 @@
-import { GET_PARTY, GET_MEMBERS  } from '../actions/party';
+import { GET_PARTY, GET_MEMBERS, GET_MEMBERS_ID } from '../actions/party';
 
-const initialState = [
+const initialState =
   {
-    "id": 1
-    "name": ''
+    "id": 1,
+    "name": '',
     "description": '',
-
-  },
-  {
-    members: [
-      {
-        "users_id": 1
-      }
-    ]
+    "members": [],
+    "memberNames": [],
+    "getPartyName": 'Default name for test' 
   }
 
-]
 
 
 
-function profiles(state = initialState, { type, payload }) {
+
+function party(state = initialState, { type, payload }) {
 
   switch (type) {
-    case GET_PARTY:
-      return payload;
+		case GET_PARTY:
+			return { ...state, getPartyName: payload };
 
-    case GET_MEMBERS:
-      return payload;
+		case GET_MEMBERS:
+			return { ...state, members: payload };
 
-    default:
-      return state;
+		case GET_MEMBERS_ID:
+			return { ...state, memId: payload };
+		default:
+			return state;
   }
 }
 
-export default profiles
+export default party

@@ -13,7 +13,7 @@ export const login = ({email, password}) => {
       await AsyncStorage.setItem("token", JSON.stringify(payload.token))
       payload = {...payload, isLoggedIn: true}
       
-      dispatch({
+      return dispatch({
         type: LOGIN,
         payload
       })
@@ -31,7 +31,7 @@ export const signup = (body) => {
       await AsyncStorage.setItem('token', JSON.stringify(payload.token))
       payload = {...payload, isLoggedIn: true }
 
-		  dispatch({
+		  return dispatch({
 			  type: SIGNUP,
 			  payload,
 		  })

@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image, AsyncStorage, TouchableNativeFeedback } from 'react-native'
+import { Font, AppLoading} from 'expo'
+import { StyleSheet, Text, View, Image, AsyncStorage, TouchableNativeFeedback,  } from 'react-native'
 import { Header } from 'react-native-elements'
 import LoginForm from './screens/LoginForm'
 import UserProfile from './screens/UserProfile'
@@ -14,24 +15,37 @@ import AppNavigation from './navigation/AppNavigation';
 import UserContactsForm from './screens/UserContactsForm'
 import Preferences from './screens/Preferences'
 import AllergiesScreen from './screens/AllergiesScreen';
-
+import PartyProfile from './screens/PartyProfile'
 
 export default class App extends React.Component {
-  
-  async componentWillMount() {
-    await Expo.Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-    });
+  state = {
+    fontLoaded: false,
   }
-  
-  
+
+  componentDidMount() {
+    this.loadAssetsAsync()
+  }
+
+  async loadAssetsAsync () {
+    await Expo.Font.loadAsync({
+      'Roboto': require('./assets/fonts/Roboto-Regular.ttf'),
+      'Roboto_medium': require('./assets/fonts/Roboto-Medium.ttf'),
+      'Oswald-Regular': require('./assets/fonts/Oswald-Regular.ttf'),
+      'Oswald-Heavy': require('./assets/fonts/Oswald-Heavy.ttf'),
+    })
+
+    this.setState({
+      fontLoaded: true,
+    })
+  }
   render() {
+    if(!this.state.fontLoaded) {
+      return <AppLoading />
+    }
+
     return <Provider store={store()}>
 			<View style={styles.container}>
-				<AppNavigation />
-				{/* <AllergyForm /> */}
-				{/* <NewUserForm /> */}
+        <AppNavigation />
 			</View>
 		</Provider>;
   }

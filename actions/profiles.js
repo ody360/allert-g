@@ -9,8 +9,8 @@ export const getProfiles = () => {
   return async (dispatch) => {
     try {
       const payload = await profiles.getProfiles()
-    //  console.log('GETTING PAYLOAD:  ', payload)
-      dispatch({
+    
+      return dispatch({
         type: GET_PROFILES,
         payload
       })
@@ -23,7 +23,9 @@ export const getProfilesId = () => {
   return async (dispatch) => {
     try {
       const payload = await profiles.getFullProfiles();
-      dispatch({
+
+      console.log('PROFILES CHECK!', payload)
+      return dispatch({
         type: GET_PROFILES_ID,
         payload
       })
@@ -32,7 +34,7 @@ export const getProfilesId = () => {
 }
 
 export const updateProfile = (body) => {
-  console.log('Updating store with data: ', body)
+  
   return dispatch => {
     const payload = {...body}
 

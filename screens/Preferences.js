@@ -26,13 +26,10 @@ class Preferences extends React.Component {
     
     let tempState = {...this.state}
     tempState = value
-    console.log('TEMPSTATE !!!!!!!', tempState)
     this.setState(...this.state,tempState)
-    console.log('Switch 1 is: ' + this.switch1Value)
   }
   toggleSwitch2 = (value) => {
     this.setState({ switch2Value: value })
-    console.log('Switch 2 is: ' + value)
   }
 
   render() {
