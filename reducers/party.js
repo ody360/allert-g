@@ -2,7 +2,6 @@ import { GET_PARTY, GET_MEMBERS, GET_MEMBERS_ID } from '../actions/party';
 
 const initialState =
   {
-    "id": 1,
     "name": '',
     "description": '',
     "members": [],
@@ -18,10 +17,10 @@ function party(state = initialState, { type, payload }) {
 
   switch (type) {
 		case GET_PARTY:
-			return { ...state, getPartyName: payload };
+			return { ...state, partyList: payload };
 
 		case GET_MEMBERS:
-			return { ...state, members: payload };
+			return { ...state, partyMembers: payload };
 
 		case GET_MEMBERS_ID:
 			return { ...state, memId: payload };

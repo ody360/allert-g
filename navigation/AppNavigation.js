@@ -42,11 +42,12 @@ export default createSwitchNavigator(
 		AuthLoading: AuthLoadingScreen,
 		Auth: AuthStack,
 		App: AppStack,
+		Group: GroupScreen,
 	},
 	{
 		initialRouteName: 'AuthLoading',
 	}
-)
+);
 
 
 const AppDrawerNavigator = createDrawerNavigator({Home: UserProfile, Other: PartyProfile })

@@ -7,31 +7,28 @@ export const getParty = () => {
   return async (dispatch) => {
     try {
       const payload = await model.getParty()
+
       dispatch({
         type: GET_PARTY,
-        payload: payload[0].name, 
+        payload: payload
       })
-       console.log('*****')
-       dispatch(getMembers())
+       
     } catch (e) { console.log("GET PARTY ERR:   ", e) }
   }
 }
 
-export const getMembers = () => {
+export const getMembers = (partyId) => {
   return async (dispatch) => {
     try{
-      let arr = []
-      const payload = await model.getMembers()
-    
-      
+      const payload = await model.getMembers(partyId);
+        
+      console.log('NNNNNNNNNNNNNNNNNNNNNN', payload.data)
       dispatch({
         type: GET_MEMBERS,
-         payload: payload.data,
+        payload: payload.data,
       })
-      // for(let i = 0; i< payload.data.length; i++) {
-      //   dispatch(getMembersId(payload.data[i].users_id))
-      // }
-      dispatch(getMembersId(payload.data))  
+      dispatch(getMembersId(payload.data))
+   
     } catch (e) { console.log('GET MEMBERS ERROR:  ', e)}
   }
 }

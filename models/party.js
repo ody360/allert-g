@@ -18,7 +18,7 @@ const getParty = async () => {
   }
 }
 
-const getMembers = async () => {
+const getMembers = async (id) => {
   try {
     const token = await AsyncStorage.getItem('token')
 
@@ -26,12 +26,12 @@ const getMembers = async () => {
       token = token.replace('"', '')
     }
     let authorization = `Bearer ${token}`
-    const res = await axios.get(`${BASE_URL}/party/all`, { headers: { authorization } })
+    const res = await axios.get(`${BASE_URL}/party/all/${id}`, { headers: { authorization } })
 
-    
+    console.log('GET MEMBERS MODEL RETURNS **** ', res.data)
     return res.data
   } catch (e) {
-    console.log('Could no retrieve allergy name', e)
+    console.log('Could not retrieve allergy name', e)
   }
 }
 

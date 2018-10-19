@@ -1,14 +1,19 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, Text, StatusBar } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, StatusBar, DrawerLayoutAndroid, ActivityIndicator } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { login } from '../actions/auth'
-import { Card, FormLabel, FormInput, FormValidationMessage, Avatar, Button } from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import { getParty } from '../actions/party'
+import { Card, FormLabel, FormInput, FormValidationMessage, Avatar, Button, Header, Icon } from 'react-native-elements'
+//import Icon from 'react-native-vector-icons/FontAwesome'
+import AvatarGroup from '../components/AvatarGroup'
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 import Dimensions from 'Dimensions'
+import MyAvatar from '../components/MyAvatar'
 
-const mapStateToProps = ({ auth }) => ({ auth });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ login }, dispatch)
+const mapStateToProps = ({ party }) => ({ party });
+const mapDispatchToProps = (dispatch) => bindActionCreators({ getParty }, dispatch)
+
 
 
 
@@ -16,47 +21,170 @@ class MainPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      
+      selectedGroup:0,
      }
   }
 
   static navigationOptions = {
-    header: null,
+    header: null, 
   }
 
   async componentDidMount() {
-    
+    await this.props.getParty();
+    this.setState({
+      navigate: this.props.navigation
+    })
+  } 
+
+  onPress = (item) => {
+    console.log('GOT INPUT: ', item)
+    //this.props.navigation.navigate('Group')
+    //  this.props.navigation.navigate('Group',{partyId: id})
   }
 
- 
+  renderItem = ({ item, index }) => {
+    return (
+      <View style={{alignItems:'center'}}>
+      <Avatar
+        key={index}
+        width={DEVICE_WIDTH-200}
+        title={item.name}
+        rounded
+        source={require("../assets/images/avatar-group1.png")}
+        activeOpacity={0.7}
+        onPress={() => {
+          console.log('AVATAR PRESSED WITH STATE: ', this.props)
+          this.props.navigation.navigate('Group', { partyId: item.id })
+          }
+        }
+      />
+     
+        <Text>{item.name}</Text>
+      </View>
+      
+    )
+  }
 
   render() {
+    const { navigate } = this.props.navigation;
+    let pList = this.props.party.partyList
 
-    return (
-
-      <View style={styles.container}>
-        <StatusBar hidden />
-        <View style={[styles.box, styles.box1]}>
-          <Text style={styles.titleText}>ALLERT-G</Text>
-        </View>
-        <View style={[styles.box, styles.box2]}>
-          <Avatar
-            width={DEVICE_WIDTH - 200}
-            title="login"
-            rounded
-            source={require("../assets/images/avatar-group1.png")}
-            onPress={() => this.props.navigation.navigate('Group')}
-            activeOpacity={0.7}
-          />
-
-        </View>
-        <View style={[styles.box, styles.box3]}>
-
-        </View>
+    let avatarList = []
+ 
+     var navigationView = (
+        <View>
+        <Text>First View</Text>
+        <Text>Second View</Text>
+        <Text>Third View</Text>
       </View>
-    );
+    )
+
+    
+      return (
+
+        <View style={styles.container}>
+          <StatusBar hidden />
+          <Header
+            leftComponent={<Icon
+              size={35}
+              name='menu'
+              type='entypo'
+              color='#f50'
+              onPress={() => console.log('Pressed')} />}
+            centerComponent={<Text style={styles.titleText}>ALLERT-G</Text>}
+            rightComponent={<Icon
+              raised
+              name='heartbeat'
+              type='font-awesome'
+              color='#f50'
+              onPress={() => console.log('hello')} />}
+            outerContainerStyles={{ backgroundColor: '#8bc34a' }}
+            innerContainerStyles={[{ justifyContent: 'space-between' },{alignItems:'center'}]}
+          />
+          <DrawerLayoutAndroid
+            drawerWidth={300}
+            drawerPosition={DrawerLayoutAndroid.positions.Left}
+            renderNavigationView={() => navigationView}
+            drawerBackgroundColor="rgba(0,0,0,0.5)"
+          >
+          <View style={[styles.box, styles.box1]}>
+          
+
+              
+          </View>
+          <View style={[styles.box, styles.box2]}>
+              {this.props.party.partyList === undefined ? <ActivityIndicator /> :
+                <Carousel
+                  data={this.props.party.partyList}
+                  renderItem={this.renderItem}
+                  itemWidth={DEVICE_WIDTH-200}
+                  sliderWidth={DEVICE_WIDTH}
+                  navigate={navigate}
+                                   
+                
+                />}
+              
+            {/* <Avatar
+              width={DEVICE_WIDTH - 200}
+              title="login"
+              rounded
+              source={require("../assets/images/avatar-group1.png")}
+              onPress={() => {
+                  //select the pressed group id and call action for it.
+                  this.props.navigation.navigate('Group')
+                
+                }
+              }
+              activeOpacity={0.7}
+            />
+            <Avatar
+              width={DEVICE_WIDTH - 200}
+              title="login"
+              rounded
+              source={require("../assets/images/avatar-group1.png")}
+              onPress={() => {
+                  //select the pressed group id and call action for it.
+                  this.props.navigation.navigate('Group')
+                
+                }
+              }
+              activeOpacity={0.7}
+            />
+            <Avatar
+              width={DEVICE_WIDTH - 200}
+              title="login"
+              rounded
+              source={require("../assets/images/avatar-group1.png")}
+              onPress={() => {
+                  //select the pressed group id and call action for it.
+                  this.props.navigation.navigate('Group')
+                
+                }
+              }
+              activeOpacity={0.7}
+            />*/}
+            
+          </View>
+          <View style={[styles.box, styles.box3]}>
+            <Text>Invite People To App</Text>
+            <Icon
+              reverse
+              raised
+              name='md-person-add'
+              type='ionicon'
+              color='#517fa4'
+              size={35}
+              
+            />
+
+          </View>
+          </DrawerLayoutAndroid>
+        </View>
+      )
+    }
   }
-}
+
+
 
 const onButtonPress = async () => {
   this.props.login(this.state)

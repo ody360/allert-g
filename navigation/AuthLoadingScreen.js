@@ -6,7 +6,8 @@ export default class AuthLoadingScreen extends React.Component {
 		super(props);
 		this._bootstrapAsync()
 		state = {
-				fontLoaded: false
+				fontLoaded: false,
+				navigate: this.props.navigation,
 			}
 		}
 

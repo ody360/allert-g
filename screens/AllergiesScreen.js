@@ -130,22 +130,12 @@ class AllergiesScreen extends React.Component {
     let sections = []
 
     
-    // setTimeout(() => {
-    //   console.log('TIMEOUT THEN GO!')
-    //   info.data = this.props.allergies.userAllergies
-    // }, 3000)
-    // info.data.length === undefined ? <ActivityIndicator /> : (info.data = this.props.allergies.userAllergies);
-    // info.data.length === 0 ? <ActivityIndicator /> : console.log('INFOMATION  ', info.data)
-    
-    //(this.props.allergies && (this.props.allergies.userAllergies.length > 0)) ? info.data = this.props.allergies.userAllergies : <ActivityIndicator />
     while(this.props.allergies.userAllergies === undefined) {
-      console.log('LOGGERRRR R')
       return <ActivityIndicator />
     }
 
     info.data = this.props.allergies.userAllergies
 
-    console.log('MADE IT OUT OF THE WHILE LOOP!!!!', info)
     sections.push(info)
 
     //sections = [{title: 'test', data:[{test:'sample'}]}]

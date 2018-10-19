@@ -7,6 +7,7 @@ import { connect } from 'react-redux'
 import Dimensions from 'Dimensions'
 import * as d3 from 'd3'
 
+
 const mapStateToProps = ({party})  => ({party})
 const mapDispatchToProps = dispatch => bindActionCreators({ getParty, getMembers, getMembersId}, dispatch)
 
@@ -19,36 +20,20 @@ const height = 250;
 
 let box_count = 3;
 let box_height = DEVICE_HEIGHT / box_count;
-const userPurchases = [
-	{ price: 4, name: 'Locke' },
-	{ price: 8, name: 'Reyes' },
-  { price: 15, name: 'Ford' },
-  { price: 16, name: 'Jarrah' },
-  { price: 23, name: 'Shephard' }, 
-  { price: 42, name: 'Kwon' },
-]
 
-const sectionAngles = d3.pie().value(d => d.price)(userPurchases)
-
-const path = d3.arc()
-  .outerRadius(100) //must be less than 1/2 the chart's height/width
-  .padAngle(.05) //defines the amount of whitespace between sections
-  .innerRadius(60) //the size of the inner 'donut' whitespace
-
-const colors = d3.scaleLinear()
-  .domain([0, userPurchases.length]).range([0, 255])
-
-
-class GroupScreen extends React.Component {
+class GroupScreen extends React.Component { 
 	constructor(props) {
-    super(props)
+		super(props)
+		const partyId = this.props.navigation.getParam('partyId')
+		this.props.getMembers(partyId)
     this.state = {
-      allergyCount = []
+      allergyCount :[]
     }
   }
 
 	async componentDidMount() {
-		await this.props.getParty();
+		await this.props.getParty()
+		
 	}
 
 	static navigationOptions = {
@@ -57,29 +42,53 @@ class GroupScreen extends React.Component {
 
 	render() {
 		let dataArr = []
-
-		console.log('IN THE PARTY',  this.props.party);
-
+		let finalCount = []
+		let allergyCounts = {}
 		if (this.props.party.memId === undefined) {
+			console.log('In memId undefined')
 			return <ActivityIndicator />;
 		}
 		const info = this.props.party.memId.map(e => {
 			let name = `${e.first_name} ${e.last_name}`
-			let temp = {};
+			let temp = {}
+			
 			temp.title = name;
 			temp.content = `\tAllergies: ${e.allergies.toString()}, \n\tMedication: ${e.medication}
      \n\tMedical History: ${e.medhx}`
       dataArr.push(temp)
-      let allergyTemp = {
-        name:'',
-        number:0,
-      }
+			
       e.allergies.map((a)=> {
-        allergyTemp.name = a,
-        allergyTemp.number = allergyTemp.number++
-      })
-      
+				allergyCounts[a] = allergyCounts[a] ? allergyCounts[a] + 1 : 1;
+			})
+			console.log('Allergy Object:  ', allergyCounts )
 		})
+
+		for(let i in allergyCounts) {
+			console.log('DATAPOINT',i, allergyCounts[i])
+			finalCount.push({type: i, count: allergyCounts[i]})
+		}
+
+		const sectionAngles = d3.pie().value(d => d.count)(finalCount);
+		const path = d3.arc()
+			.outerRadius(100) //must be less than 1/2 the chart's height/width
+			.padAngle(.05) //defines the amount of whitespace between sections
+			.innerRadius(60) //the size of the inner 'donut' whitespace
+			
+
+
+		const colors = d3
+			.scaleLinear()
+			.domain([0, finalCount.length])
+			.range([0, 255]);
+
+		console.log('FINAL DATA: ', finalCount);
+		sectionAngles.map(sec => {
+			let test = d3.arc().centroid({...sec})
+			console.log('TEST RETURNS:!!!', test, sec, path)
+		})
+
+
+
 
 		return <View style={styles.container}>
 				<StatusBar hidden />
@@ -100,32 +109,14 @@ class GroupScreen extends React.Component {
                   stroke="#000"
                   fill = {`rgb(${210},${colors(section.index) * 1.5},${colors(section.index)})`}
                   strokeWidth={1}
+							
                 />
               ))
             }
-            
             </Group>
 					</Surface>
 				</View>
-			</View>;
-			/* <Container style={styles.container}>
-				<Header>
-          <Left />
-          <Body>
-            <Title>Groups Page</Title>
-            <Subtitle>{this.props.party.getPartyName}</Subtitle>
-            </Body>
-          <Right />
-        </Header>
-				<Content padder>
-					<Accordion 
-            dataArray={dataArr} 
-            expanded={0} 
-            headerStyle={{ backgroundColor: "#b7daf8" }}
-            contentStyle={{ backgroundColor: "#ddecf8" }}  
-          />
-				</Content>
-			</Container> */
+			</View>
 	}
 }
 
