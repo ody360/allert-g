@@ -3,7 +3,6 @@ import {BASE_URL} from '../components/Constants'
 import { AsyncStorage } from 'react-native'
 
 const getAllergies = async () => {
-
 	try {
 		const res = await axios.get(`${BASE_URL}/allergies`)
 		return res.data.data

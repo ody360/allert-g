@@ -1,6 +1,6 @@
 import profiles from '../models/profiles'
 export const GET_PROFILES = "GET_PROFILES"
-export const GET_PROFILES_ID = "GET_PROFILES_ID"
+export const GET_ALL_PROFILES = 'GET_ALL_PROFILES';
 export const UPD_PROFILE = "UPD_PROFILE"
 
 
@@ -18,18 +18,19 @@ export const getProfiles = () => {
   }
 }
 
-export const getProfilesId = () => {
-
+export const getAllProfiles = () => {
   return async (dispatch) => {
     try {
-      const payload = await profiles.getFullProfiles();
+      const payload = await profiles.getAllProfiles()
 
-      console.log('PROFILES CHECK!', payload)
       return dispatch({
-        type: GET_PROFILES_ID,
+        type: GET_ALL_PROFILES,
         payload
       })
-    } catch (e) { console.log("PROFILE ERR: ", e) }
+
+    } catch (e) {
+      console.log("Get All Profiles error: ", e)
+    }
   }
 }
 

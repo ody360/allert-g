@@ -29,12 +29,7 @@ class UserContactsForm extends React.Component {
 
 
   render() {
-    // return <KeyboardAwareScrollView style={{ backgroundColor: '#4c69a5' }}
-    //   resetScrollToCoords={{ x: 0, y: 0 }}
-    //   contentContainerStyle={styles.container}
-    //   scrollEnabled={false}
-    //   enableOnAndroid={true} >
-      
+
 
       return <ScrollView contentContainerStyle={{ paddingTop: 30 }} style={{ flex: 1, backgroundColor: '#f8f8f9' }}
         keyboardDismissMode="interactive"

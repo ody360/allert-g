@@ -21,7 +21,7 @@ export const addAllergies = (body) => {
   return async (dispatch) => {
     try {
       await model.addAllergies(body);
-      // const payload = await model.getAllergies();
+      
   
       dispatch({
         type: ADD_ALLERGIES,

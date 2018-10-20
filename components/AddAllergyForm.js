@@ -1,18 +1,19 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { addAllergies } from '../actions/allergies'
+import { addAllergies, getAllergies } from '../actions/allergies';
 import { Card, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import { Container, Header, Content, Form, Item, Input, Label, Title, Text, Button } from 'native-base';
 
 
-const mapDispatchToProps = dispatch => bindActionCreators({ addAllergies }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ addAllergies, getAllergies }, dispatch);
 
 
 
 class AddAllergyForm extends React.Component {
   constructor(props) {
     super(props)
+    this.myRef = React.createRef();
     this.state = {
       allergy_name:''
     }
@@ -33,15 +34,19 @@ class AddAllergyForm extends React.Component {
 				<Form>
 					<Item stackedLabel>
 						<Label>Allergy Name</Label>
-            <Input onChangeText={(text) => this.onChange(text)} />
+            <FormInput 
+              ref={input => this.input = input}
+              onChangeText={(text) => this.onChange(text)} />
 					</Item>
 				</Form>
 				<Button raised title="submit" 
-                onPress={() => {
-						      (this.props.addAllergies(this.state))
-                  this.props.getAllergies()
+                onPress={async () => { console.log('PRESSED: ', this.props)
+						      await this.props.addAllergies(this.state)
+                  await this.props.refresh()
+                  this.input.clearText();
+                  
 					      }}
-                value=''
+                
                 ><Text>Add Allergy</Text></Button>
 			</Content>
 		</Container>;

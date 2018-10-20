@@ -14,10 +14,20 @@ import AllergiesScreen from '../screens/AllergiesScreen'
 import Emergency from '../screens/Emergency'
 import MainPage from '../screens/MainPage'
 import GroupScreen from '../screens/GroupScreen'
+import NewGroupForm from '../screens/NewGroupForm';
+import NewGroupMembersScreen from '../screens/NewGroupMembersScreen';
 
 
 
-const AppStack = createStackNavigator({ Home: MainPage, Group: GroupScreen })
+const AppStack = createStackNavigator({ 
+	Home: MainPage, 
+	Group: GroupScreen, 
+	Emergency: Emergency,
+	AddGroup: NewGroupForm,
+	AddPeople: NewGroupMembersScreen
+})
+
+
 const AuthStack = createStackNavigator({
 	Auth: LoginForm,
 	SignUp: NewUserForm,

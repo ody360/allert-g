@@ -71,12 +71,7 @@ class NewUserForm extends React.Component {
 							this.props.navigation.navigate('Contacts', {'state':this.state})  }}>
 						<Text>Continue</Text>
 					</Button>
-					<Text> </Text>
-				<Text> </Text>
-				<Text> </Text>
-				<Text> </Text>
-				<Text> </Text>
-				<Text> </Text>
+		
 				
 			</ScrollView>
 	//	</KeyboardAwareScrollView>

@@ -19,27 +19,25 @@ class AllergyForm extends React.Component {
   constructor(props) {
     super(props)
     const testState = this.props.navigation.getParam('state')
+
     this.state = {
       ...testState,
-      allergies: [{
-        "allergy_name":'',
-        "id":1,
-        "checked":false
-      }],
+      allergies: [],
       isReady: false,
       allergies_id: []
     }
+
+  
     
   }
 
   
   async componentDidMount() {
     await this.props.getAllergies()
-    this.setState({ 
-       ...this.state,
-        allergies:this.props.allergies
-      }
-    )   
+    this.setState({
+      ...this.state,
+      allergies: this.props.allergies.payload
+    })
   }
 
   async componentWillMount() {
@@ -78,7 +76,14 @@ class AllergyForm extends React.Component {
     })
     
     this.setState(...this.state,tempState)
+  }
 
+  refresh = async () => {
+    await this.props.getAllergies()
+    this.setState({
+      ...this.state,
+      allergies: this.props.allergies.payload
+    })
   }
 
 
@@ -93,7 +98,7 @@ class AllergyForm extends React.Component {
 			  <Header style={styles.navbar}><Title>ALLERGIES</Title></Header>		
           <Content>
            {this.state.allergies.length <= 1 ? <ActivityIndicator /> : <Allergies allergies={this.state.allergies} onPress={this.onPress}/> }
-            <AddAllergyForm key={this.state.allergies_id.length} />
+            <AddAllergyForm key={this.state.allergies_id.length} refresh={this.refresh} />
 	        </Content>
         <Button full info 
           onPress={() => { 

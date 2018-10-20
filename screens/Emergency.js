@@ -2,12 +2,13 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getProfiles } from '../actions/profiles'
+import { checkAllergies } from '../actions/allergies'
 import { View, Text, StyleSheet, Button, ActivityIndicator } from 'react-native';
 import Dimensions from 'Dimensions'
 import Moment from 'moment'
 
 const mapStateToProps = ({profiles, allergies}) => ({ profiles, allergies });
-const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, checkAllergies }, dispatch);
 
 
 class Emergency extends React.Component {
@@ -22,19 +23,20 @@ class Emergency extends React.Component {
 
   
   async componentDidMount() {
-    await this.props.getProfiles();
-    
-
+    await this.props.getProfiles()
+    await this.props.checkAllergies()
   }
 
   
 
   render() {
-    if (this.props.profiles.data === undefined || this.props.allergies.data === undefined) {
+    console.log('EMERGENCY PROFILES!', this.props)
+
+    if (this.props.profiles.data === undefined || this.props.allergies.userAllergies === undefined) {
       return (<ActivityIndicator />)
     } else {
       var profiles = this.props.profiles.data[0]
-      var allergyList = this.props.allergies.data
+      var allergyList = this.props.allergies.userAllergies
     }
     let bday = Moment().diff(profiles.birthdate, 'years');
     let allergyText = ''

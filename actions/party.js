@@ -22,7 +22,6 @@ export const getMembers = (partyId) => {
     try{
       const payload = await model.getMembers(partyId);
         
-      console.log('NNNNNNNNNNNNNNNNNNNNNN', payload.data)
       dispatch({
         type: GET_MEMBERS,
         payload: payload.data,
