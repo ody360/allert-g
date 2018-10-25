@@ -24,7 +24,7 @@ const getAllProfiles = async () => {
     let authorization = `Bearer ${token}`
     const res = await axios.get(`${BASE_URL}/profiles/all`, { headers: { authorization } })
     
-    return res.data
+    return res.data.data
   } catch (e) { 
     console.log("IN Profiles ERR:  ", e)   
    }

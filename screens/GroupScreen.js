@@ -60,11 +60,10 @@ class GroupScreen extends React.Component {
       e.allergies.map((a)=> {
 				allergyCounts[a] = allergyCounts[a] ? allergyCounts[a] + 1 : 1;
 			})
-			console.log('Allergy Object:  ', allergyCounts )
+			
 		})
 
 		for(let i in allergyCounts) {
-			console.log('DATAPOINT',i, allergyCounts[i])
 			finalCount.push({type: i, count: allergyCounts[i]})
 		}
 
@@ -81,10 +80,8 @@ class GroupScreen extends React.Component {
 			.domain([0, finalCount.length])
 			.range([0, 255]);
 
-		console.log('FINAL DATA: ', finalCount);
 		sectionAngles.map(sec => {
 			let test = d3.arc().centroid({...sec})
-			console.log('TEST RETURNS:!!!', test, sec, path)
 		})
 
 

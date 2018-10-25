@@ -14,3 +14,16 @@ const Input = ({ label }) => {
 }
 
 export { Input }
+
+checkLoading = () => {
+  let listArray = []
+  setTimeout(() => {
+    this.props.profiles.allProfiles.map((m, i) => {
+      listArray.push({ name: `${m.first_name} ${m.last_name}`, key: i })
+    }
+    )
+    this.setState({
+      listViewData: listArray
+    })
+  }, 1000)
+}

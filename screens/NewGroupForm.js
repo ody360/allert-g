@@ -42,13 +42,13 @@ class NewGroupForm extends React.Component {
   
 
   render() {
-  
+    console.log('STATE CHECK: ', this.state.groupName)
     var navigationView = (
       <SideMenu navigate={this.props.navigation} />
     )
 
     return (
-
+      
       <View style={styles.container}>
 
         <StatusBar hidden />
