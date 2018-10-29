@@ -68,10 +68,17 @@ class GroupScreen extends React.Component {
 		}
 
 		const sectionAngles = d3.pie().value(d => d.count)(finalCount);
+		const labelAngles = d3.pie().value(d=> d.type)(finalCount)
 		const path = d3.arc()
 			.outerRadius(100) //must be less than 1/2 the chart's height/width
 			.padAngle(.05) //defines the amount of whitespace between sections
 			.innerRadius(60) //the size of the inner 'donut' whitespace
+
+
+		const labelArc = d3.arc()
+			.outerRadius(70) //must be less than 1/2 the chart's height/width
+			.padAngle(.05) //defines the amount of whitespace between sections
+			.innerRadius(30) //the size of the inner 'donut' whitespace
 			
 
 
@@ -81,8 +88,16 @@ class GroupScreen extends React.Component {
 			.range([0, 255]);
 
 		sectionAngles.map(sec => {
+			console.log('SECS ARE', sec)
 			let test = d3.arc().centroid({...sec})
 		})
+
+		labelAngles.map((sec => {
+				let c = labelArc.centroid(sec)
+			}
+		
+		))
+
 
 
 
@@ -106,7 +121,6 @@ class GroupScreen extends React.Component {
                   stroke="#000"
                   fill = {`rgb(${210},${colors(section.index) * 1.5},${colors(section.index)})`}
                   strokeWidth={1}
-							
                 />
               ))
             }

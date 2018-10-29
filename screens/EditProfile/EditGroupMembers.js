@@ -1,8 +1,8 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getProfiles, getAllProfiles } from '../actions/profiles'
-import { createParty } from '../actions/party'
+import { getProfiles, getAllProfiles } from '../../actions/profiles'
+import { getParty, getMembers, updateParty } from '../../actions/party';
 import {
 	ListView,
 	StyleSheet,
@@ -15,47 +15,56 @@ import {
 	FlatList,
 } from 'react-native';
 import { SwipeListView, SwipeRow } from 'react-native-swipe-list-view'; // 0.4.6
-import MemberSelect from '../components/MemberSelect'
+import MemberSelect from '../../components/MemberSelect'
 import Swipeout from 'react-native-swipeout'
 import { Header, Content, Button, CheckBox, List} from 'react-native-elements'
-import Members from '../components/Members'
+import Members from '../../components/Members'
 import 'prop-types'; // 15.6.0
 import Dimensions from 'Dimensions';
 
 
-const mapStateToProps = ({ profiles }) => ({ profiles })
-const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, getAllProfiles, createParty }, dispatch);
+const mapStateToProps = ({ profiles, party }) => ({ profiles, party })
+const mapDispatchToProps = dispatch =>
+	bindActionCreators({ getProfiles, getAllProfiles, getParty, getMembers, updateParty }, dispatch);
 
 
-class NewGroupMemberScreen extends React.Component {
+class EditGroupMembers extends React.Component {
 	constructor(props) {
-		super(props);
-		const prevState = this.props.navigation.getParam('state');
+		super(props)
+		const prevState = this.props.navigation.getParam('state')
+		if(prevState) this.props.getMembers(prevState.groupId)
 		this.state = {
-			...prevState,
 			isLoaded: false,
 			currentProfileId: '',
 			allMembers: [],
 			selectMembers: [],
 			checkedMembers: [],
+			groupName:prevState.groupName,
+			groupId: prevState.groupId,
 		};
 	}
 
 	async componentDidMount() {
 		await this.props.getProfiles();
 		await this.props.getAllProfiles();
+		await this.props.getParty()
+		const prevState = await this.props.navigation.getParam('state');
+		
+		await this.props.getMembers(prevState.groupId)
+
 
 		const currentProfileId = this.props.profiles.data[0].id;
 
 		this.setState({
+			...prevState,
 			navigate: this.props.navigation,
-			allMembers: this.props.profiles.allProfiles,
 			isLoaded: true,
 			currentProfileId,
 		});
 
 		let members = this.formatMembersArray();
 		this.setState({
+			...this.state,
 			navigate: this.props.navigation,
 			allMembers: members,
 			isLoaded: true,
@@ -93,23 +102,32 @@ class NewGroupMemberScreen extends React.Component {
 	formatMembersArray() {
 		let result;
 		let comp;
-		let final = [];
+		let final = []
+		const checkId = this.props.party.partyMembers
+
 		if (this.state.isLoaded) {
-			result = this.state.allMembers.filter(i => i.id !== this.state.currentProfileId)
+			result = this.props.profiles.allProfiles.filter(i => i.id !== this.state.currentProfileId);
 		}
 
 		if (result) {
 			comp = result.map(e => {
-				final.push({
-					id: e.id,
-					name: `${e.first_name} ${e.last_name}`,
-					isChecked: false,
-				});
-			});
+				if(checkId.includes({users_id: e.id})) {
+					final.push({
+						id: e.id,
+						name: `${e.first_name} ${e.last_name}`,
+						isChecked: true,
+					})
+				} else {
+					final.push({
+						id: e.id,
+						name: `${e.first_name} ${e.last_name}`,
+						isChecked: false,
+					})
+				}
+			})
 		}
-
-		
-		return final;
+			console.log('########', final)
+			return final;
 	}
 
 	render() {
@@ -136,13 +154,13 @@ class NewGroupMemberScreen extends React.Component {
 				<Button
 					raised
 					icon={{ name: 'cached' }}
-					title="Create Group"
+					title="Update Group"
 					backgroundColor={'blue'}
 					onPress={() => {
 						const checked = this.createIDArray()
 						
 						console.log('BUTTON PRESSED GROUP MADE:', checked)
-						this.props.createParty({ name: this.state.groupName, membersArray: checked })
+						this.props.updateParty({ membersArray: checked, partyId: this.state.groupId })
 						this.props.navigation.navigate('Home')
 					}}
 				/>
@@ -290,4 +308,4 @@ const styles = StyleSheet.create({
 	},
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewGroupMemberScreen)
+export default connect(mapStateToProps, mapDispatchToProps)(EditGroupMembers)

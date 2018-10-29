@@ -61,51 +61,52 @@ class Emergency extends React.Component {
 
 const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ff0000',
-  },
-  image: {
-    height: null,
-    width: DEVICE_WIDTH,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 30,
-  },
-  logo: {
-    height: 40,
-    width: 40,
-    marginBottom: 10,
-  },
-  title: {
-    backgroundColor: 'transparent',
-    color: 'white',
-    fontSize: 24,
-    marginBottom: 10,
-    fontWeight: '500',
-  },
-  list: {
-    flex: 1,
-  },
-  sectionHeader: {
-    backgroundColor: 'whitesmoke',
-    padding: 20,
-  },
-  sectionHeaderText: {
-    fontSize: 13,
-  },
-  row: {
-    backgroundColor: 'white',
-    padding: 20,
-  },
-  rowTitle: {
-    fontSize: 13,
-    fontWeight: '500',
-  },
-  rowSpeaker: {
-    fontSize: 13,
-  },
-})
+	container: {
+		flex: 1,
+		backgroundColor: '#ff0000',
+	},
+	image: {
+		height: null,
+		width: DEVICE_WIDTH,
+		justifyContent: 'center',
+		alignItems: 'center',
+		marginTop: 30,
+	},
+	logo: {
+		height: 40,
+		width: 40,
+		marginBottom: 10,
+	},
+	title: {
+		backgroundColor: 'transparent',
+		color: 'white',
+		fontSize: 24,
+		marginBottom: 10,
+		fontWeight: '500',
+		fontFamily: 'Oswald-Heavy',
+	},
+	list: {
+		flex: 1,
+	},
+	sectionHeader: {
+		backgroundColor: 'whitesmoke',
+		padding: 20,
+	},
+	sectionHeaderText: {
+		fontSize: 13,
+	},
+	row: {
+		backgroundColor: 'white',
+		padding: 20,
+	},
+	rowTitle: {
+		fontSize: 13,
+		fontWeight: '500',
+	},
+	rowSpeaker: {
+		fontSize: 13,
+	},
+});
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(Emergency)

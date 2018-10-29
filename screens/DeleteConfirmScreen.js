@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { login } from '../actions/auth'
 import { getParty } from '../actions/party'
 import { Card, FormLabel, FormInput, FormValidationMessage, Avatar, Button, Header, Icon } from 'react-native-elements'
+//import Icon from 'react-native-vector-icons/FontAwesome'
 import Dimensions from 'Dimensions'
 import SideMenu from '../components/SideMenu'
 
@@ -14,12 +15,12 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({ getParty }, dispat
 
 
 
-class NewGroupForm extends React.Component {
+class DeleteConfirmScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       groupName: '',
-      drawerOpen: false,
+   
     }
   }
 
@@ -27,97 +28,50 @@ class NewGroupForm extends React.Component {
     header: null,
   }
 
-  async componentDidMount() {
-    await this.props.getParty();
-    this.setState({
-      navigate: this.props.navigation
-    })
-  }
+ 
 
   onPress = (item) => {
     console.log('GOT INPUT: ', item)
   }
 
-  
+
 
   render() {
-    console.log('STATE CHECK: ', this.state.groupName)
-    var navigationView = (
-      <SideMenu navigate={this.props.navigation} />
-    )
+  
 
     return (
-      
+
       <View style={styles.container}>
 
         <StatusBar hidden />
-        <Header
-          leftComponent={
-            {/* <Icon
-            size={35}
-            name='menu'
-            type='entypo'
-            color='#f50'
-            onPress={() => {
-              let tempState = this.state.drawerOpen
-              this.state.drawerOpen ? this.refs['DRAWER_REF'].closeDrawer() :
-                this.refs['DRAWER_REF'].openDrawer()
-
-              this.setState({ ...this.state, drawerOpen: !tempState })
-            }
-            }
-          /> */}
-          }
-          centerComponent={<Text style={styles.titleText}>ALLERT-G</Text>}
-          rightComponent={
-            {/* <Icon
-            raised
-            name='heartbeat'
-            type='font-awesome'
-            color='#f50'
-            onPress={() => {
-              this.props.navigation.navigate('Emergency')
-            }
-            }
-          /> */}
-          }
-          outerContainerStyles={{ backgroundColor: '#8bc34a' }}
-          innerContainerStyles={[{ justifyContent: 'space-between' }, { alignItems: 'center' }]}
-        />
-        <DrawerLayoutAndroid
-          ref={'DRAWER_REF'}
-          drawerWidth={300}
-          drawerPosition={DrawerLayoutAndroid.positions.Left}
-          renderNavigationView={() => navigationView}
-          drawerBackgroundColor="#F4F5DA"
-        >
+      
+      
 
           <View style={[styles.box, styles.box1]}>
 
           </View>
           <View style={[styles.box, styles.box2]}>
             <Avatar large rounded source={require('../assets/images/avatar-group1.png')} onPress={() => console.log('Works!')} activeOpacity={0.7} />
-            <FormLabel>Group Name</FormLabel>
-            <FormInput containerStyle={styles.formInput} textInputRef="groupName" placeholder="Group Name" onChangeText={(text) => this.setState({ groupName: text })} />
+            <FormLabel>Are You sure You Want To Delete Group: </FormLabel>
             <Button
               raised
               icon={{ name: 'cached' }}
-              title='Continue'
-              backgroundColor={'blue'} 
+              title='DELETE'
+              backgroundColor={'red'}
               onPress={() => {
-                  //this.props.updateProfile(this.state)
-                  this.props.navigation.navigate('AddPeople', { 'state': this.state })
-                }
+              
+                this.props.navigation.navigate('AddPeople', { 'state': this.state })
               }
-              />
+              }
+            />
 
 
 
           </View>
           <View style={[styles.box, styles.box3]}>
-         
+
           </View>
-        </DrawerLayoutAndroid>
+
       </View>
     )
   }
@@ -194,4 +148,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewGroupForm)
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(DeleteConfirmScreen);

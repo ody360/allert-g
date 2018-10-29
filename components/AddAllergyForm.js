@@ -40,7 +40,7 @@ class AddAllergyForm extends React.Component {
 					</Item>
 				</Form>
 				<Button raised title="submit" 
-                onPress={async () => { console.log('PRESSED: ', this.props)
+                onPress={async () => { 
 						      await this.props.addAllergies(this.state)
                   await this.props.refresh()
                   this.input.clearText();

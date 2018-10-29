@@ -1,25 +1,59 @@
-import PropTypes from 'prop-types';
-import React, { Component } from 'react';
-import styles from '../styles/styles';
-import { NavigationActions } from 'react-navigation';
-import { ScrollView, Text, View, AsyncStorage } from 'react-native';
-import { Button } from 'react-native-elements';
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import styles from '../styles/styles'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { getParty } from '../actions/party'
+import { NavigationActions } from 'react-navigation'
+import { ScrollView, Text, View, ActivityIndicator, AsyncStorage } from 'react-native'
+import { Button } from 'react-native-elements'
+import MemberSelect from './MemberSelect'
 
+const mapStateToProps = ({ party }) => ({ party })
+const mapDispatchToProps = dispatch => bindActionCreators({ getParty }, dispatch)
 
 
 class SideMenu extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      partyNames: [],
+      partyId: [],
+      isLoaded: false
+    }
 
   }
+
+async componentDidMount () {
+  this.props.getParty()
+  let partyNames = []
+  console.log('GROUPLIST CALLED:  ', this.props.party.partyList)
+  const gl = this.props.party.partyList.map((p) => {
+    partyNames.push({name:p.name, pid: p.party_id})
+    this.setState({ partyNames, isLoaded: true })
+  })
+
+}
   navigateToScreen = (route) => () => {
     const navigateAction = NavigationActions.navigate({
       routeName: route
     });
-    this.props.navigation.dispatch(navigateAction);
+    this.props.navigate.dispatch(navigateAction);
+  }
+
+  onPress = (id, name) => {
+    console.log('GOT BACK ID: ', id, name)
+    this.props.navigate.navigate('EditPeople', { state: { groupName: name, groupId: id } });
   }
 
   render() {
+    if(!this.state.isLoaded) {
+      console.log('COMP NOT READY: ', this.state)
+
+      return <ActivityIndicator /> 
+    }
+    
+    console.log('SIDEMEN STATE:', this.state)
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -28,22 +62,17 @@ class SideMenu extends Component {
               Profile
             </Text>
             <View style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page1')}>
+              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Profile')}>
                 Edit Profile
               </Text>
             </View>
           </View>
           <View>
             <Text style={styles.sectionHeadingStyle}>
-              Groups
+              Edit Group
             </Text>
             <View style={styles.navSectionStyle}>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page2')}>
-                Add New Group
-              </Text>
-              <Text style={styles.navItemStyle} onPress={this.navigateToScreen('Page3')}>
-                Page3
-              </Text>
+              {this.state.partyNames.length < 1 ? <ActivityIndicator /> : <MemberSelect group={this.state.partyNames} onPress={this.onPress} />}
             </View>
           </View>
         </ScrollView>
@@ -69,6 +98,6 @@ class SideMenu extends Component {
 
 SideMenu.propTypes = {
   navigation: PropTypes.object
-};
+}
 
-export default SideMenu;
+export default connect(mapStateToProps, mapDispatchToProps)(SideMenu)

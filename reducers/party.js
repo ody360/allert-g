@@ -1,4 +1,4 @@
-import { GET_PARTY, GET_MEMBERS, GET_MEMBERS_ID } from '../actions/party';
+import { GET_PARTY, GET_MEMBERS, GET_MEMBERS_ID, CREATE_PARTY, DELETE_PARTY, UPDATE_PARTY } from '../actions/party';
 
 const initialState =
   {
@@ -16,7 +16,10 @@ const initialState =
 function party(state = initialState, { type, payload }) {
 
   switch (type) {
-		case GET_PARTY:
+    case GET_PARTY:
+    case CREATE_PARTY:
+    case DELETE_PARTY:
+    case UPDATE_PARTY:
 			return { ...state, partyList: payload };
 
 		case GET_MEMBERS:

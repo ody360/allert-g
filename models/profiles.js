@@ -30,7 +30,24 @@ const getAllProfiles = async () => {
    }
 }
 
+const updateProfileAllergies = async (body) => {
+  
+  try{
+    const token = await AsyncStorage.getItem('token')
+
+    while (token.indexOf('"') != -1) {
+      token = token.replace('"', '')
+    }
+    let authorization = `Bearer ${token}`
+    const res = await axios.put(`${BASE_URL}/profiles/allergies`, { headers: { authorization }, body })
+    return res.data
+
+  } catch (e) {
+    console.log('Update allergy err: ', e)
+  }
+}
 
 
 
-export default { getProfiles, getAllProfiles };
+
+export default { getProfiles, getAllProfiles, updateProfileAllergies };

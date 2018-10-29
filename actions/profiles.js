@@ -34,10 +34,11 @@ export const getAllProfiles = () => {
   }
 }
 
-export const updateProfile = (body) => {
-  
-  return dispatch => {
-    const payload = {...body}
+export const updateProfileAllergies = (body) => {
+  console.log('IN ACTION TO UPD: ', body)
+  return async dispatch => {
+    const payload = await profiles.updateProfileAllergies(body)
+
 
     dispatch({
       type: UPD_PROFILE,

@@ -16,16 +16,31 @@ import MainPage from '../screens/MainPage'
 import GroupScreen from '../screens/GroupScreen'
 import NewGroupForm from '../screens/NewGroupForm';
 import NewGroupMembersScreen from '../screens/NewGroupMembersScreen';
+import ProfilesScreen from '../screens/ProfilesScreen';
+import EditMedHx from '../screens/EditProfile/EditMedHx';
+import EditContacts from '../screens/EditProfile/EditContacts';
+import EditAllergy from '../screens/EditProfile/EditAllergy';
+import EditGroupMembers from '../screens/EditProfile/EditGroupMembers';
 
+const ProfileStack = createStackNavigator(
+	{
+		Home: ProfilesScreen,
+		EditMed: EditMedHx,
+		EditContacts: EditContacts,
+		EditAllergies: EditAllergy,
+		
+	},
+);
 
-
-const AppStack = createStackNavigator({ 
-	Home: MainPage, 
-	Group: GroupScreen, 
+const AppStack = createStackNavigator({
+	Home: MainPage,
+	Group: GroupScreen,
 	Emergency: Emergency,
 	AddGroup: NewGroupForm,
-	AddPeople: NewGroupMembersScreen
-})
+	AddPeople: NewGroupMembersScreen,
+	Profile: ProfileStack,
+	EditPeople: EditGroupMembers,
+});
 
 
 const AuthStack = createStackNavigator({
@@ -36,6 +51,7 @@ const AuthStack = createStackNavigator({
 	Hx: AddMedHx,
 	Disclaimer: DisclaimerForm
 })
+
 
 
 const AppStack2 = createMaterialTopTabNavigator({

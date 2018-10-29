@@ -3,7 +3,7 @@ import { View, ScrollView, StyleSheet, Text, StatusBar, DrawerLayoutAndroid, Act
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { login } from '../actions/auth'
-import { getParty } from '../actions/party'
+import { getParty, deleteParty } from '../actions/party';
 import { Card, FormLabel, FormInput, FormValidationMessage, Avatar, Button, Header, Icon } from 'react-native-elements'
 //import Icon from 'react-native-vector-icons/FontAwesome'
 import AvatarGroup from '../components/AvatarGroup'
@@ -13,7 +13,7 @@ import MyAvatar from '../components/MyAvatar'
 import SideMenu from '../components/SideMenu'
 
 const mapStateToProps = ({ party }) => ({ party });
-const mapDispatchToProps = (dispatch) => bindActionCreators({ getParty }, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({ getParty, deleteParty }, dispatch);
 
 
 
@@ -53,10 +53,16 @@ class MainPage extends React.Component {
             source={require("../assets/images/avatar-group1.png")}
             activeOpacity={0.7}
             onPress={() => {
-              console.log('AVATAR PRESSED WITH PROPS: ', this.props)
-              this.props.navigation.navigate('Group', { partyId: item.id })
+                console.log('AVATAR PRESSED WITH PROPS: ', this.props)
+                this.props.navigation.navigate('Group', { partyId: item.id })
+              }
             }
+            onLongPress={() => {
+                console.log('LONG PRESSED: ', item.id)
+                this.props.deleteParty(item.id)
+              }
             }
+
           /> : <Avatar
             key={index}
             width={DEVICE_WIDTH - 200}
