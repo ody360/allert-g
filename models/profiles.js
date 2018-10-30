@@ -8,7 +8,7 @@ const getProfiles = async () => {
     while (token.indexOf('"') != -1) {
       token = token.replace('"', '')
     }
-    
+    console.log('GET AUTHORIZATION!!!!!!!', token)
     const res = await axios.get(`${BASE_URL}/profiles`, { headers: { authorization: `Bearer ${token}` } })
     return res.data
   } catch (e) { console.log("IN MODEL ERR: ", e) }
@@ -31,23 +31,54 @@ const getAllProfiles = async () => {
 }
 
 const updateProfileAllergies = async (body) => {
-  
   try{
     const token = await AsyncStorage.getItem('token')
 
     while (token.indexOf('"') != -1) {
       token = token.replace('"', '')
     }
-    let authorization = `Bearer ${token}`
-    const res = await axios.put(`${BASE_URL}/profiles/allergies`, { headers: { authorization }, body })
-    return res.data
+    let Authorization = `Bearer ${token}`
+    // const res = await axios.put(`${BASE_URL}/profiles/allergies`, { headers: { authorization }}, body)
+    // return res.data
+    return axios({
+		method: 'put',
+		url: `${BASE_URL}/profiles/allergies`,
+		headers: {
+			'Content-Type': 'application/json',
+			Accept: 'application/json',
+			Authorization,
+		},
+		data: body
+	});
 
   } catch (e) {
     console.log('Update allergy err: ', e)
-  }
+  } 
+} 
+
+const updateProfile = async (body) => {
+  try {
+    const data = {home_phone: body.home, cell_phone: body.cell, emergency1: body.emerg1, emergency2: body.emerg2}
+    const token = await AsyncStorage.getItem('token')
+    while (token.indexOf('"') != -1) {
+      token = token.replace('"', '')
+    }
+    console.log('UPDATE TOKEN: VVVVVVVV', token)
+    //const res = await axios.put(`${BASE_URL}/profiles`, { headers: { authorization: `Bearer ${token}` }}, body)
+    return axios({
+      method: 'put',
+      url: `${BASE_URL}/profiles`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data
+    })
+ //   return res.data
+  } catch (e) { console.log("IN MODEL ERR: ", e) }
 }
+ 
 
 
-
-
-export default { getProfiles, getAllProfiles, updateProfileAllergies };
+export default { getProfiles, getAllProfiles, updateProfileAllergies, updateProfile };

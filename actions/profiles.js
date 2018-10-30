@@ -46,3 +46,16 @@ export const updateProfileAllergies = (body) => {
     })
   }
 }
+
+
+export const updateProfile = (body) => {
+  
+  return async dispatch => {
+    const payload = await profiles.updateProfile(body)
+
+    dispatch({
+      type: UPD_PROFILE,
+      payload: payload.data.data
+    })
+  }
+}

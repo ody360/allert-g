@@ -175,7 +175,7 @@ class MainPage extends React.Component {
             
           </View>
           <View style={[styles.box, styles.box3]}>
-            <Text>Invite People To App</Text>
+            <Text>Hold Down Group To Delete</Text>
             <Icon
               reverse
               raised
@@ -183,8 +183,10 @@ class MainPage extends React.Component {
               type='ionicon'
               color='#517fa4'
               size={35}
+              onPress={() => this.props.navigation.navigate('AddGroup')}
               
             />
+            <Text>Add New Group</Text>
 
           </View>
           </DrawerLayoutAndroid>

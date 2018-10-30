@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { StyleSheet, Button } from 'react-native'
+import { StyleSheet, Button, Text } from 'react-native'
 import { getProfiles } from '../../actions/profiles'
 import { Container, Header, Content, Textarea, Form, Title } from 'native-base'
 import Dimensions from 'Dimensions'

@@ -165,10 +165,12 @@ class ProfilesScreen extends React.Component {
       case 'emergency1':
       case 'emergency2':
         console.log('IN CONTACTS:')
+        this.props.navigation.navigate('EditContacts')
         break;
       case 'medhx':
       case 'medication':
         console.log('IN MED HISTORY')
+        this.props.navigation.navigate('EditMed')
         break;
       default:
         console.log('IN DEFAULT DO NOTHING')

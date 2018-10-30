@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import Dimensions from 'Dimensions'
 import * as d3 from 'd3'
+import {PieChart} from 'react-native-chart-kit'
 
 
 const mapStateToProps = ({party})  => ({party})
@@ -89,11 +90,16 @@ class GroupScreen extends React.Component {
 
 		sectionAngles.map(sec => {
 			console.log('SECS ARE', sec)
-			let test = d3.arc().centroid({...sec})
+			let test = path.centroid(sec)
+			console.log('INTEST', test)
+			path.context(sec.data.type, test[0], test[1]);
+
 		})
 
 		labelAngles.map((sec => {
 				let c = labelArc.centroid(sec)
+				console.log('TEEEET', c)
+				labelArc.context(sec.data.type, c[0], c[1])
 			}
 		
 		))
@@ -121,10 +127,27 @@ class GroupScreen extends React.Component {
                   stroke="#000"
                   fill = {`rgb(${210},${colors(section.index) * 1.5},${colors(section.index)})`}
                   strokeWidth={1}
-                />
+									
+                />			
+								
               ))
             }
             </Group>
+						<Group x={width / 2} y={height / 2}>
+						{
+							labelAngles.map(section => (
+								<Shape
+									key={section.index}
+									d={path(section)}
+									stroke="#000"
+									fill={`rgb(${210},${colors(section.index) * 1.5},${colors(section.index)})`}
+									strokeWidth={1}
+
+								/>
+
+							))
+						}
+					</Group>
 					</Surface>
 				</View>
 			</View>

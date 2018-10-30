@@ -32,15 +32,20 @@ const ProfileStack = createStackNavigator(
 	},
 );
 
-const AppStack = createStackNavigator({
-	Home: MainPage,
-	Group: GroupScreen,
-	Emergency: Emergency,
-	AddGroup: NewGroupForm,
-	AddPeople: NewGroupMembersScreen,
-	Profile: ProfileStack,
-	EditPeople: EditGroupMembers,
-});
+const AppStack = createStackNavigator(
+	{
+		Home: MainPage,
+		Group: GroupScreen,
+		Emergency: Emergency,
+		AddGroup: NewGroupForm,
+		AddPeople: NewGroupMembersScreen,
+		Profile: ProfileStack,
+		EditPeople: EditGroupMembers,
+	},
+	{
+		initialRouteName: 'Home',
+	}
+);
 
 
 const AuthStack = createStackNavigator({

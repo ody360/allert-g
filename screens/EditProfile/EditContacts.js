@@ -5,12 +5,12 @@ import { TextInput, View, StyleSheet, Text, ScrollView, Image, KeyboardAvoidingV
 import { Avatar, Divider, FormInput, FormLabel, FormValidation } from 'react-native-elements'
 import { Content, ListItem, Radio, Right, Left, Button } from 'native-base'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { getProfiles } from '../../actions/profiles';
+import { getProfiles, updateProfile } from '../../actions/profiles';
 
 var moment = require('moment')
 
 const mapStateToProps = ({ profiles }) => ({ profiles })
-const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, updateProfile }, dispatch);
 
 
 class EditContacts extends React.Component {
@@ -54,7 +54,8 @@ class EditContacts extends React.Component {
 
        
         <Button full info onPress={() => {
-          console.log('PRESSED TO SUBMIT')
+          console.log('PRESSED TO SUBMIT', this.state)
+          this.props.updateProfile(this.state)
         }}>
           <Text>Update</Text>
         </Button>
