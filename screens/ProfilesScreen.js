@@ -157,23 +157,19 @@ class ProfilesScreen extends React.Component {
   editPage = (type) => {
     switch (type) {
       case 'Allergies':
-        console.log('INSIDE ALLERGIES')
         this.props.navigation.navigate('EditAllergies')
         break
       case 'home_phone':
       case 'cell_phone':
       case 'emergency1':
       case 'emergency2':
-        console.log('IN CONTACTS:')
         this.props.navigation.navigate('EditContacts')
         break;
       case 'medhx':
       case 'medication':
-        console.log('IN MED HISTORY')
         this.props.navigation.navigate('EditMed')
         break;
       default:
-        console.log('IN DEFAULT DO NOTHING')
     }
   }
 

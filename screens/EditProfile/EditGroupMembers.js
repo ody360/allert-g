@@ -126,7 +126,6 @@ class EditGroupMembers extends React.Component {
 				}
 			})
 		}
-			console.log('########', final)
 			return final;
 	}
 
@@ -159,7 +158,6 @@ class EditGroupMembers extends React.Component {
 					onPress={() => {
 						const checked = this.createIDArray()
 						
-						console.log('BUTTON PRESSED GROUP MADE:', checked)
 						this.props.updateParty({ membersArray: checked, partyId: this.state.groupId })
 						this.props.navigation.navigate('Home')
 					}}

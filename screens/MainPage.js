@@ -39,7 +39,7 @@ class MainPage extends React.Component {
   } 
 
   onPress = (item) => {
-    console.log('GOT INPUT: ', item)
+
   }
 
   renderItem = ({ item, index }) => {
@@ -53,12 +53,10 @@ class MainPage extends React.Component {
             source={require("../assets/images/avatar-group1.png")}
             activeOpacity={0.7}
             onPress={() => {
-                console.log('AVATAR PRESSED WITH PROPS: ', this.props)
                 this.props.navigation.navigate('Group', { partyId: item.id })
               }
             }
             onLongPress={() => {
-                console.log('LONG PRESSED: ', item.id)
                 this.props.deleteParty(item.id)
               }
             }
@@ -71,7 +69,6 @@ class MainPage extends React.Component {
             source={{uri:item.img_URL}}
             activeOpacity={0.7}
             onPress={() => {
-              console.log('AVATAR PRESSED WITH PROPS: ', item.id)
               if(item.id === 'new') {this.props.navigation.navigate('AddGroup')}
               else {
                 this.props.navigation.navigate('Group', { partyId: item.id })

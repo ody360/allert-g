@@ -141,7 +141,6 @@ class NewGroupMemberScreen extends React.Component {
 					onPress={() => {
 						const checked = this.createIDArray()
 						
-						console.log('BUTTON PRESSED GROUP MADE:', checked)
 						this.props.createParty({ name: this.state.groupName, membersArray: checked })
 						this.props.navigation.navigate('Home')
 					}}

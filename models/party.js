@@ -28,7 +28,6 @@ const getMembers = async (id) => {
     let authorization = `Bearer ${token}`
     const res = await axios.get(`${BASE_URL}/party/all/${id}`, { headers: { authorization } })
 
-    console.log('GET MEMBERS MODEL RETURNS **** ', res.data)
     return res.data
   } catch (e) {
     console.log('Could not retrieve allergy name', e)

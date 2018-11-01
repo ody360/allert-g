@@ -63,30 +63,8 @@ class GroupScreen extends React.Component {
 			
 		})
 
-		// const colors = d3
-		// 	.scaleLinear()
-		// 	.domain([0, finalCount.length])
-		// 	.range(["pink", "green","blue"]);
-
-		
 		for(let i in allergyCounts) {
-			finalCount.push({
-				name: i,
-				count: allergyCounts[i],
-				color: 'red',
-				legendFontColor: '#2D1059',
-				legendFontSize: 16
-			});
-		}
-
-		const colors = d3
-			.scaleLinear()
-			.domain([0, finalCount.length])
-			.range(['pink', 'brown']);
-
-
-		for(let i=0; i < finalCount.length; i++) {
-			finalCount[i].color=colors(i)
+			finalCount.push({type: i, count: allergyCounts[i]})
 		}
 
 		const sectionAngles = d3.pie().value(d => d.count)(finalCount);
@@ -102,8 +80,13 @@ class GroupScreen extends React.Component {
 			.outerRadius(70) //must be less than 1/2 the chart's height/width
 			.padAngle(.05) //defines the amount of whitespace between sections
 			.innerRadius(30) //the size of the inner 'donut' whitespace
+			
 
-		
+
+		const colors = d3
+			.scaleLinear()
+			.domain([0, finalCount.length])
+			.range([0, 255]);
 
 		let labels = []
 		sectionAngles.map(sec => {
@@ -118,9 +101,13 @@ class GroupScreen extends React.Component {
 		
 		))
 
+		const chartConfig = {
+			backgroundGradientFrom: '#1E2923',
+			backgroundGradientTo: '#08130D',
+			color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`
+		}
 
-		const chartConfig = { backgroundGradientFrom: '#1E2923', backgroundGradientTo: '#08130D', color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})` };
-		
+
 		return <View style={styles.container}>
 				<StatusBar hidden />
 				<View style={[styles.box, styles.box1]}>
@@ -130,27 +117,31 @@ class GroupScreen extends React.Component {
 					<Accordion dataArray={dataArr} expanded={0} headerStyle={[{ backgroundColor: '#b7daf8' }, { width: DEVICE_WIDTH - 20 }]} contentStyle={{ backgroundColor: '#ddecf8' }} />
 				</View>
 				<View style={[styles.box, styles.box3]}>
-				
-						<PieChart
-							data={finalCount}
-							width={DEVICE_WIDTH}
-							height={220}
-							chartConfig={chartConfig}
-							accessor="count"
-							backgroundColor="transparent"
-							paddingRight="25"
-							paddingLeft="15"
+				<PieChart
+					data={data}
+					width={DEVICE_WIDTH}
+					height={220}
+					chartConfig={chartConfig}
+					accessor="population"
+					backgroundColor="transparent"
+					paddingLeft="15"
+				/>
+				{
+					sectionAngles.map(section => (
+						<Shape
+							key={section.index}
+							d={path(section)}
+							stroke="#000"
+							fill={`rgb(${210},${colors(section.index) * 1.5},${colors(section.index)})`}
+							strokeWidth={1}
 						/>
-            
-           
-					
+
+					))
+				}
 				</View>
 			</View>
 	}
-
-
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(GroupScreen)
 

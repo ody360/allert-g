@@ -35,7 +35,6 @@ export const getAllProfiles = () => {
 }
 
 export const updateProfileAllergies = (body) => {
-  console.log('IN ACTION TO UPD: ', body)
   return async dispatch => {
     const payload = await profiles.updateProfileAllergies(body)
 

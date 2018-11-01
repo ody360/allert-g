@@ -31,7 +31,7 @@ class DisclaimerForm extends React.Component {
 			</Text>
 			<Button title="Sign Up!" onPress={() => {
 					this.props.signup(this.state);
-					this.props.navigation.navigate('App', { state: this.state });
+					this.props.navigation.navigate('Auth')
 				}} />
 		</View>;
   }

@@ -51,7 +51,6 @@ class EditAllergy extends React.Component {
 
 
       }
-      console.log('YAHOOO', allergies)
       return a
     })
 
@@ -128,8 +127,8 @@ class EditAllergy extends React.Component {
         <Button full info 
           onPress={() => { 
             this.createAllergyArray()
-            console.log('DATA TO BE SENT IS: ', this.state.allergies_id)
             this.props.updateProfileAllergies(this.state.allergies_id)
+            this.props.navigation.goBack()
            
           }}>
           <Text>Update</Text>

@@ -35,13 +35,11 @@ class NewGroupForm extends React.Component {
   }
 
   onPress = (item) => {
-    console.log('GOT INPUT: ', item)
   }
 
   
 
   render() {
-    console.log('STATE CHECK: ', this.state.groupName)
     var navigationView = (
       <SideMenu navigate={this.props.navigation} />
     )

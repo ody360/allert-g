@@ -54,8 +54,8 @@ class EditContacts extends React.Component {
 
        
         <Button full info onPress={() => {
-          console.log('PRESSED TO SUBMIT', this.state)
           this.props.updateProfile(this.state)
+          this.props.navigation.goBack()
         }}>
           <Text>Update</Text>
         </Button>

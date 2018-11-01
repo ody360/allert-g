@@ -27,7 +27,6 @@ class SideMenu extends Component {
 async componentDidMount () {
   this.props.getParty()
   let partyNames = []
-  console.log('GROUPLIST CALLED:  ', this.props.party.partyList)
   const gl = this.props.party.partyList.map((p) => {
     partyNames.push({name:p.name, pid: p.party_id})
     this.setState({ partyNames, isLoaded: true })
@@ -42,18 +41,14 @@ async componentDidMount () {
   }
 
   onPress = (id, name) => {
-    console.log('GOT BACK ID: ', id, name)
     this.props.navigate.navigate('EditPeople', { state: { groupName: name, groupId: id } });
   }
 
   render() {
     if(!this.state.isLoaded) {
-      console.log('COMP NOT READY: ', this.state)
-
       return <ActivityIndicator /> 
     }
     
-    console.log('SIDEMEN STATE:', this.state)
     return (
       <View style={styles.container}>
         <ScrollView>
@@ -84,7 +79,6 @@ async componentDidMount () {
             icon={{ name: 'sign-out', type: 'font-awesome' }}
             title='LOGOUT' 
             onPress={() => {
-                console.log('LOGOUT PRESSED', this.props)
                 AsyncStorage.clear()
                 this.props.navigate.navigate('Auth')
               }

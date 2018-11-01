@@ -5,7 +5,6 @@ import styles from '../styles/styles';
 
 
 const MemberSelect = ({group,onPress}) => {
-  console.log('IN THE MS COMPONENT:!!!!', group)
   let groupArray = [];
   group.forEach((g, i) => {
     groupArray.push(

@@ -7,7 +7,6 @@ const AvatarGroup = (group) => {
 
   group.group.length === undefined ? <ActivityIndicator /> : 
     group.group.forEach((g, i) => {
-      console.log('GROUP CHECK ', g, i)
       groupArray.push(
           <Avatar  
               key={i} 
@@ -18,7 +17,6 @@ const AvatarGroup = (group) => {
           />)
     })
 
-    console.log('RETURNING THE: ', groupArray)
     return groupArray
   
   }

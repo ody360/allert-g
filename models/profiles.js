@@ -8,7 +8,6 @@ const getProfiles = async () => {
     while (token.indexOf('"') != -1) {
       token = token.replace('"', '')
     }
-    console.log('GET AUTHORIZATION!!!!!!!', token)
     const res = await axios.get(`${BASE_URL}/profiles`, { headers: { authorization: `Bearer ${token}` } })
     return res.data
   } catch (e) { console.log("IN MODEL ERR: ", e) }
@@ -26,7 +25,7 @@ const getAllProfiles = async () => {
     
     return res.data.data
   } catch (e) { 
-    console.log("IN Profiles ERR:  ", e)   
+    ("IN Profiles ERR:  ", e)   
    }
 }
 
@@ -52,7 +51,7 @@ const updateProfileAllergies = async (body) => {
 	});
 
   } catch (e) {
-    console.log('Update allergy err: ', e)
+    ('Update allergy err: ', e)
   } 
 } 
 
@@ -63,8 +62,6 @@ const updateProfile = async (body) => {
     while (token.indexOf('"') != -1) {
       token = token.replace('"', '')
     }
-    console.log('UPDATE TOKEN: VVVVVVVV', token)
-    //const res = await axios.put(`${BASE_URL}/profiles`, { headers: { authorization: `Bearer ${token}` }}, body)
     return axios({
       method: 'put',
       url: `${BASE_URL}/profiles`,
@@ -76,7 +73,7 @@ const updateProfile = async (body) => {
       data
     })
  //   return res.data
-  } catch (e) { console.log("IN MODEL ERR: ", e) }
+  } catch (e) { ("IN MODEL ERR: ", e) }
 }
  
 

@@ -14,6 +14,7 @@ import AllergiesScreen from '../screens/AllergiesScreen'
 import Emergency from '../screens/Emergency'
 import MainPage from '../screens/MainPage'
 import GroupScreen from '../screens/GroupScreen'
+import GroupScreen2 from '../screens/GroupScreen2'
 import NewGroupForm from '../screens/NewGroupForm';
 import NewGroupMembersScreen from '../screens/NewGroupMembersScreen';
 import ProfilesScreen from '../screens/ProfilesScreen';

@@ -87,8 +87,6 @@ class PartyProfile extends React.Component {
 				setTimeout(() => this.props.getPartyName === info.title, 1000);
 				this.props.getPartyName === '' ? <ActivityIndicator /> : (info.title = this.props.party.getPartyName);
 
-				console.log('INFO IS CURRENTLY ', this.props.party.getPartyName, info);
-
 				let sections = [
 				  {
 				    title: info.title,

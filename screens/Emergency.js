@@ -7,11 +7,24 @@ import { View, Text, StyleSheet, Button, ActivityIndicator } from 'react-native'
 import Dimensions from 'Dimensions'
 import Moment from 'moment'
 
+
 const mapStateToProps = ({profiles, allergies}) => ({ profiles, allergies });
 const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, checkAllergies }, dispatch);
 
 
 class Emergency extends React.Component {
+	static navigationOptions = {
+		title: 'Emergency Script',
+		headerStyle: {
+			backgroundColor: '#f4511e',
+		},
+		headerTintColor: '#fff',
+		headerTitleStyle: {
+			fontWeight: 'bold',
+		},
+
+
+	}
   constructor(props) {
     super(props)
     
@@ -30,8 +43,6 @@ class Emergency extends React.Component {
   
 
   render() {
-    console.log('EMERGENCY PROFILES!', this.props)
-
     if (this.props.profiles.data === undefined || this.props.allergies.userAllergies === undefined) {
       return (<ActivityIndicator />)
     } else {
@@ -63,7 +74,7 @@ const DEVICE_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#ff0000',
+		backgroundColor: '#F05151',
 	},
 	image: {
 		height: null,
@@ -82,6 +93,7 @@ const styles = StyleSheet.create({
 		color: 'white',
 		fontSize: 24,
 		marginBottom: 10,
+		padding: 10,
 		fontWeight: '500',
 		fontFamily: 'Oswald-Heavy',
 	},

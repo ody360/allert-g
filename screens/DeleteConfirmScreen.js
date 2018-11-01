@@ -31,7 +31,7 @@ class DeleteConfirmScreen extends React.Component {
  
 
   onPress = (item) => {
-    console.log('GOT INPUT: ', item)
+
   }
 
 

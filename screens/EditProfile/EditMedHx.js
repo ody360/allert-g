@@ -33,7 +33,6 @@ class EditMedHx extends React.Component {
 
 
   render() {
-    console.log('IN EDITMEDHX: ', this.state.medHx, this.state.meds)
     return <Container style={styles.container}>
 			<Header />
 			<Content padder>
@@ -53,7 +52,7 @@ class EditMedHx extends React.Component {
 
 				<Button style={styles.newUser} onPress={() => {
 						this.setState(...this.state, this.tempState);
-						this.props.navigation.navigate('Disclaimer', { state: this.state });
+						this.props.navigation.goBack()
 					}} title="SUBMIT" />
 			</Content>
 		</Container>;
