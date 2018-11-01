@@ -5,9 +5,9 @@ The development of this mobile application is brought on by personal family memb
 
 This application is my first attempt to create a mobile application with the use of React-Native, Redux, Expo, and many other packages.
 
-To Run Application:
+### To Run Application:
 
-* Clone and ```npm install``` the Allert-G-Backend API 
+* Clone and ```npm install``` the [Allert-G-Backend API](https://github.com/ody360/Allert-G-Backend)
 * Clone and ```npm install``` this repository. 
 * Inside the file components/Constants.js 
 
