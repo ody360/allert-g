@@ -75,7 +75,51 @@ const updateProfile = async (body) => {
  //   return res.data
   } catch (e) { ("IN MODEL ERR: ", e) }
 }
+
+const updateMedHx = async (body) => {
+  try {
+    const data = { medhx: body.medhx }
+    const token = await AsyncStorage.getItem('token')
+    while (token.indexOf('"') != -1) {
+      token = token.replace('"', '')
+    }
+    return axios({
+      method: 'put',
+      url: `${BASE_URL}/profiles/medhx`,
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data
+    })
+    //   return res.data
+  } catch (e) { ("IN MODEL ERR: ", e) }
+}
+
+const updateMeds = async body => {
+	try {
+		const data = { medication: body.medication };
+		const token = await AsyncStorage.getItem('token');
+		while (token.indexOf('"') != -1) {
+			token = token.replace('"', '');
+		}
+		return axios({
+			method: 'put',
+			url: `${BASE_URL}/profiles/meds`,
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
+			data,
+		});
+		//   return res.data
+	} catch (e) {
+		'IN MODEL ERR: ', e;
+	}
+};
  
 
 
-export default { getProfiles, getAllProfiles, updateProfileAllergies, updateProfile };
+export default { getProfiles, getAllProfiles, updateProfileAllergies, updateProfile, updateMedHx, updateMeds };

@@ -78,11 +78,10 @@ const formatUserMed = obj => {
 
 
 
-class ProfilesScreen extends React.Component {
+class ProfilesScreen extends React.PureComponent {
 
   static navigationOptions = {
      title: 'Personal Profile',
-    // drawerLabel: 'Home',
     
   }
 
@@ -120,6 +119,7 @@ class ProfilesScreen extends React.Component {
       selection: 'LOGOUT',
       refreshing: false,
       isReady: false,
+      updating: false,
     }
   }
 
@@ -141,17 +141,17 @@ class ProfilesScreen extends React.Component {
 
 
 
-  _onRefresh = () => {
-    this.setState({ refreshing: true })
-    async () => {
-      await this.props.getProfilesId()
-      await this.props.checkAllergies()
-      this.setState({
-        ...this.state,
-        refreshing: false
-      })
-    }
-  }
+  async componentWillUpdate(nextProps, nextState) {
+    const upd = nextProps.navigation.getParam('updating', false)
+   console.log('YUMMMM', upd)
+     if(upd) {
+      await this.props.getProfiles()
+      nextProps.navigation.setParams({updating: false})
+     }
+
+
+   
+}   
 
 
   editPage = (type) => {
@@ -181,11 +181,23 @@ class ProfilesScreen extends React.Component {
         subtitle={item.subtitle}
         avatar={{ uri: item.avatar_url }}
         onPress={() => { 
-          this.editPage(item.name)  
+          this.editPage(item.name)
           }}
       />
     )
   } 
+
+  refresh = async () => {
+    this.setState({ refreshing: true })
+    async () => {
+      await this.props.getProfilesId()
+      await this.props.checkAllergies()
+      this.setState({
+        ...this.state,
+        refreshing: false
+      })
+    }
+  }
 
 
 

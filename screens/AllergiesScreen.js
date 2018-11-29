@@ -45,6 +45,8 @@ class AllergiesScreen extends React.Component {
     await this.props.checkAllergies()
     
   }
+
+  
   
 	_onRefresh = () => {
 		this.setState({ refreshing: true })
@@ -138,7 +140,6 @@ class AllergiesScreen extends React.Component {
 
     sections.push(info)
 
-    //sections = [{title: 'test', data:[{test:'sample'}]}]
 
 		return (
 			<View style={styles.container}>

@@ -104,14 +104,18 @@ class EditGroupMembers extends React.Component {
 		let comp;
 		let final = []
 		const checkId = this.props.party.partyMembers
-
+		
 		if (this.state.isLoaded) {
-			result = this.props.profiles.allProfiles.filter(i => i.id !== this.state.currentProfileId);
+			result = this.props.profiles.allProfiles.filter(i => i.id !== this.state.currentProfileId)
 		}
 
+		console.log('COYOTE', result)
+
 		if (result) {
-			comp = result.map(e => {
-				if(checkId.includes({users_id: e.id})) {
+			comp = result.map((e,i) => {
+				console.log('ABOUT TO DO A CHECK: ', checkId, checkId[i])		
+				if(checkId[i] !== undefined) {
+					console.log('IN FINAL PUSH', e.id, checkId[i].users_id)
 					final.push({
 						id: e.id,
 						name: `${e.first_name} ${e.last_name}`,
@@ -125,11 +129,14 @@ class EditGroupMembers extends React.Component {
 					})
 				}
 			})
-		}
+		
+			console.log('SPEED', final)
 			return final;
 	}
+}
 
 	render() {
+		console.log('YOOOOO', this.props)
 		return (
 			<View>
 				<List>

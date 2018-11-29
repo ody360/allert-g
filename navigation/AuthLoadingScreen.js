@@ -37,7 +37,7 @@ export default class AuthLoadingScreen extends React.Component {
 		return (
 			<View>
 				<ActivityIndicator size={'large'} color={'red'}/>
-				<Text style={[{ fontWeight: 'bold' },{color:'red'}]}>Preparing Application</Text>
+				<Text style={[{ fontWeight: 'bold' },{color:'red'},{justifyContent:'center'},{fontFamily:'Oswald-Heavy'}]}>Preparing Application</Text>
 				<StatusBar barStyle="default" />
 			</View>
 		);

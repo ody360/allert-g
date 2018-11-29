@@ -13,14 +13,15 @@ const mapStateToProps = ({ profiles }) => ({ profiles })
 const mapDispatchToProps = dispatch => bindActionCreators({ getProfiles, updateProfile }, dispatch);
 
 
-class EditContacts extends React.Component {
+class EditContacts extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
       home: '',
       cell: '',
       emerg1: '',
-      emerg2: ''
+      emerg2: '',
+           
     }
 
   }
@@ -55,7 +56,9 @@ class EditContacts extends React.Component {
        
         <Button full info onPress={() => {
           this.props.updateProfile(this.state)
-          this.props.navigation.goBack()
+          this.props.navigation.navigate('Home',{'updating':true})
+         
+  
         }}>
           <Text>Update</Text>
         </Button>

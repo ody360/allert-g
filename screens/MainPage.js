@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, ScrollView, StyleSheet, Text, StatusBar, DrawerLayoutAndroid, ActivityIndicator } from 'react-native';
+import { View, ScrollView, StyleSheet, Text, StatusBar, DrawerLayoutAndroid, ActivityIndicator, Alert } from 'react-native';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { login } from '../actions/auth'
@@ -38,7 +38,17 @@ class MainPage extends React.Component {
     })
   } 
 
-  onPress = (item) => {
+  deleteSeqence = (id,name) => {
+    Alert.alert(
+		'Delete Party',
+		`Are you sure you want to delete ${name}`,
+		[
+			//    { text: 'Ask me later', onPress: () => console.log('Ask me later pressed', id) },
+			{ text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel' },
+			{ text: 'OK', onPress: () => this.props.deleteParty(id) },
+		],
+		{ cancelable: true }
+	);
 
   }
 
@@ -57,7 +67,8 @@ class MainPage extends React.Component {
               }
             }
             onLongPress={() => {
-                this.props.deleteParty(item.id)
+                this.deleteSeqence(item.id,item.name);
+             //   this.props.deleteParty(item.id)
               }
             }
 
@@ -71,6 +82,7 @@ class MainPage extends React.Component {
             onPress={() => {
               if(item.id === 'new') {this.props.navigation.navigate('AddGroup')}
               else {
+                
                 this.props.navigation.navigate('Group', { partyId: item.id })
               }
             }

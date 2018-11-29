@@ -38,18 +38,18 @@ class UserContactsForm extends React.Component {
         <Avatar medium rounded source={{ uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg' }} onPress={() => console.log('Works!')} activeOpacity={0.7} />
        <Content>
         <FormLabel>Home Phone</FormLabel>
-        <FormInput textInputRef="home_phone" placeholder="2065551212" onChangeText={(text) => this.setState({ home_phone: text })} />
+          <FormInput keyboardType='numeric' textInputRef="home_phone" placeholder="2065551212" onChangeText={(text) => this.setState({ home_phone: text })} />
         <FormLabel>Cell Phone</FormLabel>
-        <FormInput textInputRef="cell_phone" placeholder="2065551212" onChangeText={(text) => this.setState({ cell_phone: text })} />
+          <FormInput keyboardType='numeric' textInputRef="cell_phone" placeholder="2065551212" onChangeText={(text) => this.setState({ cell_phone: text })} />
         <FormLabel>Emergency Number 1</FormLabel>
-        <FormInput textInputRef="emergency1" placeholder="2065551212" onChangeText={(text) => this.setState({ emergency1: text })} />
+          <FormInput keyboardType='numeric' textInputRef="emergency1" placeholder="2065551212" onChangeText={(text) => this.setState({ emergency1: text })} />
         <FormLabel>Emergency Number 2</FormLabel>
-        <FormInput textInputRef="emergency2" placeholder="2065551212" onChangeText={(text) => this.setState({ emergency2: text })} />
+          <FormInput keyboardType='numeric' textInputRef="emergency2" placeholder="2065551212" onChangeText={(text) => this.setState({ emergency2: text })} />
         </Content>
 
        
         <Button full info onPress={() => {
-          ///this.props.updateProfile(...this.state)
+         
           this.props.navigation.navigate('Allergy', {'state': this.state})
         }}>
           <Text>Continue</Text>

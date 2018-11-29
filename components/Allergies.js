@@ -10,8 +10,8 @@ const Allergies = (allergies) => {
     allergyArray.push(<CheckBox key={i} title={a.allergy_name} checked={a.checked} onPress={()=> allergies.onPress(a.id)} />)
   })
   )
-
-	return allergyArray;
+  
+  return allergyArray.sort();
 }
 
 export default Allergies

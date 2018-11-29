@@ -1,4 +1,4 @@
-import { GET_PROFILES, GET_ALL_PROFILES, UPD_PROFILES } from '../actions/profiles';
+import { GET_PROFILES, GET_ALL_PROFILES, UPD_PROFILES, UPD_MEDICAL } from '../actions/profiles';
 
 const initialState =
 {
@@ -26,13 +26,12 @@ function profiles(state = initialState, { type, payload }) {
 
   switch (type) {
 		case GET_PROFILES:
+    case UPD_PROFILES:
+    case UPD_MEDICAL:
 			return payload;
 
 		case GET_ALL_PROFILES:
-			return {...state, allProfiles: payload};
-
-		case UPD_PROFILES:
-			return payload;
+			return { ...state, allProfiles: payload };
 
 		default:
 			return state;

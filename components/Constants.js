@@ -1,3 +1,3 @@
 import React from 'react'
 
-export const BASE_URL = 'http://172.20.4.235:5000/api'
+export const BASE_URL = 'http://192.168.0.31:5000/api';

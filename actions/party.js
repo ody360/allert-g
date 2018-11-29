@@ -10,7 +10,7 @@ export const getParty = () => {
   return async (dispatch) => {
     try {
       const payload = await model.getParty()
-
+      
       dispatch({
         type: GET_PARTY,
         payload: payload
@@ -24,7 +24,7 @@ export const getMembers = (partyId) => {
   return async (dispatch) => {
     try{
       const payload = await model.getMembers(partyId);
-        
+      console.log('PPPPARTY TIME: ', payload)
       dispatch({
         type: GET_MEMBERS,
         payload: payload.data,
